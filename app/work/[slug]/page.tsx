@@ -55,15 +55,17 @@ export default async function CaseStudyPage({
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
           <Link
             href="/work"
-            className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-white"
+            className="group inline-flex h-10 items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 text-xs font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/[0.08] hover:text-white"
           >
-            <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M11 13L6 8l5-5" />
-            </svg>
+            <span className="grid h-5 w-5 place-items-center rounded-full bg-white/10 transition-transform duration-300 group-hover:-translate-x-0.5">
+              <svg viewBox="0 0 16 16" className="h-2.5 w-2.5 rotate-180" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </span>
             All case studies
           </Link>
 
-          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-[0.2em] text-white/45">
+          <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-[0.2em] text-white/45">
             <span className="font-semibold text-white/80">{project.client}</span>
             <span className="h-1 w-1 rounded-full bg-white/20" />
             <span>{project.industry}</span>

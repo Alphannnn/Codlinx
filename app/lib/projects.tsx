@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import LiveSitePreview from "../components/LiveSitePreview";
 
 export const ACCENT = "#3FC9B4";
 
@@ -9,458 +10,560 @@ export type Project = {
   year: string;
   title: string;
   blurb: string;
+  summary: string;
+  url: string;
   metric: { value: string; label: string };
   tags: string[];
   hue: string;
   swatch: string;
-  visual: ReactNode;
+  visual?: ReactNode;
   challenge: string;
   approach: string[];
   outcome: { value: string; label: string }[];
+  heroImage: string;
+  heroAlt: string;
+  gallery: { image: string; alt: string; caption: string }[];
+  testimonial: {
+    quote: string;
+    name: string;
+    role: string;
+    avatar: string;
+  };
+  services: string[];
+  duration: string;
+  team: string;
+  location: string;
 };
 
-export const PROJECTS: Project[] = [
+type Seed = Omit<Project, "visual"> & { swatch: string; hue: string };
+
+const SEEDS: Seed[] = [
   {
-    slug: "nimbus-health",
-    client: "Nimbus Health",
-    industry: "HealthTech",
-    year: "2025",
-    title: "A patient OS for a 50-clinic network.",
-    blurb:
-      "We rebuilt their fragmented patient records into a single, HIPAA-compliant platform — and shipped a clinician app that cut chart time by half.",
-    metric: { value: "−42%", label: "Time per chart" },
-    tags: ["Next.js", "FHIR", "AWS", "HIPAA"],
-    hue: "rgba(63,201,180,0.20)",
-    swatch: "#3FC9B4",
-    visual: <HealthVisual />,
-    challenge:
-      "Nimbus operated 50 clinics on four legacy EMR systems. Clinicians were copying notes between tabs, lab data lived in faxes, and the average chart took 14 minutes.",
-    approach: [
-      "Audited workflows across 12 clinic types over four weeks.",
-      "Designed a unified patient record powered by FHIR + Postgres.",
-      "Rebuilt the clinician app in Next.js with offline-first sync.",
-      "Migrated 4.2M historical records with zero data loss.",
-    ],
-    outcome: [
-      { value: "−42%", label: "Time per chart" },
-      { value: "100%", label: "HIPAA compliance" },
-      { value: "4.2M", label: "Records migrated" },
-    ],
-  },
-  {
-    slug: "atlas-trade",
-    client: "Atlas Trade",
-    industry: "Fintech",
+    slug: "flote",
+    client: "Flote",
+    industry: "Marketing Automation",
     year: "2024",
-    title: "A trading floor in the browser.",
+    url: "https://flotelab.com/",
+    title: "A workflow engine for modern marketing teams.",
     blurb:
-      "Real-time portfolio analytics for a $2B AUM hedge fund, with sub-100ms market data and a custom strategy DSL.",
-    metric: { value: "$2B+", label: "Assets under analytics" },
-    tags: ["WebSockets", "Rust", "TimescaleDB", "React"],
-    hue: "rgba(139,92,246,0.25)",
+      "Full-stack delivery on Flote Lab — a marketing automation platform that turns multi-channel campaigns into a single, observable workflow.",
+    summary:
+      "We led full-stack development on Flote, building campaign workflows, integrations, and the dashboards marketers actually open every morning. Cross-functional collaboration shaped the product from API contracts to UI states.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["Next.js", "Node.js", "Postgres", "Automation"],
+    hue: "rgba(139,92,246,0.22)",
     swatch: "#8B5CF6",
-    visual: <FintechVisual />,
+    heroImage:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Marketing analytics dashboards on a wide monitor",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+        alt: "Campaign analytics dashboard on a laptop",
+        caption: "Campaign analytics surfaced in one operational view",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=80",
+        alt: "Marketing team reviewing automation workflows",
+        caption: "Automation workflows replacing spreadsheets and ad-hoc scripts",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80",
+        alt: "Strategy session at a workshop table",
+        caption: "Strategy synced weekly with the in-house product team",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We led full-stack delivery on Flote, partnering with product, design, and growth to ship integrations, workflow primitives, and reporting that marketers rely on day-to-day.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Flote",
+      avatar:
+        "https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=240&q=80",
+    },
     challenge:
-      "Atlas's quants were running strategies in spreadsheets with stale prices. They needed a real-time platform without giving up the expressiveness of a notebook.",
+      "Flote needed to translate scattered marketing tactics into repeatable automated workflows — without sacrificing the flexibility growth teams expect.",
     approach: [
-      "Built a Rust market-data ingester pulling from 8 venues.",
-      "Designed a strategy DSL that compiles to safe Rust at runtime.",
-      "Shipped a React dashboard with WebSocket-driven order books.",
-      "Stress-tested at 1.4M ticks/sec with p99 latency under 90ms.",
+      "Mapped the marketing workflow surface end-to-end with the product team.",
+      "Built core automation primitives and event-driven triggers in Node.",
+      "Shipped a Next.js dashboard with campaign analytics and audit history.",
+      "Wired third-party integrations behind a unified connector layer.",
     ],
     outcome: [
-      { value: "$2B+", label: "AUM analyzed live" },
-      { value: "<90ms", label: "Tick → screen p99" },
-      { value: "47", label: "Live strategies" },
+      { value: "Live", label: "Shipped to production" },
+      { value: "Full-stack", label: "Delivery scope" },
+      { value: "2024", label: "Engagement year" },
     ],
+    services: ["Web", "Cloud", "Strategy"],
+    duration: "Multi-quarter",
+    team: "Full-stack pod",
+    location: "Remote",
   },
   {
-    slug: "lumen-labs",
-    client: "Lumen Labs",
-    industry: "AI",
-    year: "2025",
-    title: "RAG-powered research, at enterprise scale.",
+    slug: "traded",
+    client: "Traded",
+    industry: "Fintech",
+    year: "2023",
+    url: "https://traded.co/",
+    title: "Streamlining the trade, end to end.",
     blurb:
-      "We built a private knowledge engine that ingests 12 file formats, cites sources, and answers across 200K internal documents.",
-    metric: { value: "3M / mo", label: "Queries answered" },
-    tags: ["LangChain", "pgvector", "OpenAI", "Python"],
+      "Backend and frontend delivery on Traded — a platform that pulls fragmented trading workflows into a clean, investor-friendly experience.",
+    summary:
+      "We contributed to Traded as full-stack engineers, building durable backend services and intuitive interfaces so investors could move from listing to close without the spreadsheet detours.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["React", "Node.js", "TypeScript", "Postgres"],
+    hue: "rgba(63,201,180,0.22)",
+    swatch: "#3FC9B4",
+    heroImage:
+      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Trading charts and market data on multiple screens",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=1200&q=80",
+        alt: "Real-time market data on a workstation",
+        caption: "Investor-facing flows pulled from disparate sources",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80",
+        alt: "Engineer reviewing platform architecture",
+        caption: "Robust backend services powering the trade lifecycle",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1554260570-e9689a3418b8?auto=format&fit=crop&w=1200&q=80",
+        alt: "Skyline with financial district at golden hour",
+        caption: "Built for serious operators, not weekend traders",
+      },
+    ],
+    testimonial: {
+      quote:
+        "On Traded, we delivered backend systems and frontend surfaces in lockstep — collaborating with the team to ensure each trade flow felt seamless from listing through close.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Traded",
+      avatar:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=240&q=80",
+    },
+    challenge:
+      "Traded needed to compress a fragmented, document-heavy trade flow into a single experience investors and operators could both trust.",
+    approach: [
+      "Audited the existing trade lifecycle with operations stakeholders.",
+      "Built backend services to model listings, parties, and state transitions.",
+      "Shipped React interfaces tuned for investor decision-making.",
+      "Hardened the platform with type-safe APIs and observability hooks.",
+    ],
+    outcome: [
+      { value: "Live", label: "Shipped to production" },
+      { value: "Full-stack", label: "Delivery scope" },
+      { value: "2023", label: "Engagement year" },
+    ],
+    services: ["Web", "Cloud"],
+    duration: "Multi-quarter",
+    team: "Full-stack pod",
+    location: "Remote",
+  },
+  {
+    slug: "zentap",
+    client: "Zentap",
+    industry: "Marketing Automation",
+    year: "2022",
+    url: "https://www.zentap.com/",
+    title: "Leading delivery on a real-estate marketing engine.",
+    blurb:
+      "Pivotal development role on Zentap — a marketing automation platform built for real-estate agents who want growth without the busywork.",
+    summary:
+      "We led development efforts on Zentap, collaborating across product, design, and growth to ship features and integrations that turn marketing inputs into outputs agents can measure.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["Next.js", "Node.js", "Stripe", "Integrations"],
     hue: "rgba(244,114,182,0.22)",
     swatch: "#F472B6",
-    visual: <AIVisual />,
+    heroImage:
+      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Real-estate listing photography on a desk with a laptop",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80",
+        alt: "Real-estate agents reviewing marketing content",
+        caption: "Pipeline from listing to multi-channel campaign",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=1200&q=80",
+        alt: "Engineer at a workstation late afternoon",
+        caption: "Engineering led from architecture down to shipped UI",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
+        alt: "Team discussing growth strategy at a whiteboard",
+        caption: "Cross-functional rhythm with product and growth",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We played a leading role in Zentap's development — shipping features and integrations alongside cross-functional partners to turn marketing automation into outcomes agents trust.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Zentap",
+      avatar:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80",
+    },
     challenge:
-      "Lumen's analysts spent hours hunting through Confluence, SharePoint, and Slack to answer the same research questions. Hallucination-prone consumer tools were a non-starter.",
+      "Zentap's agent customers needed marketing leverage without becoming marketing operators — automation had to feel like a service, not a tool.",
     approach: [
-      "Designed an ingestion pipeline for 12 file formats with provenance.",
-      "Built a hybrid retrieval stack (BM25 + pgvector) tuned per domain.",
-      "Wrapped responses in a citation contract — every claim links to a source.",
-      "Rolled out behind SSO with row-level access controls.",
+      "Owned the technical roadmap alongside product leadership.",
+      "Built the automation backbone with reusable workflow primitives.",
+      "Shipped agent-facing dashboards with measurable performance views.",
+      "Integrated commerce, content, and channel partners behind one API.",
     ],
     outcome: [
-      { value: "3M / mo", label: "Queries answered" },
-      { value: "200K", label: "Documents indexed" },
-      { value: "94%", label: "Citation accuracy" },
+      { value: "Live", label: "Shipped to production" },
+      { value: "Lead role", label: "Engagement model" },
+      { value: "2022", label: "Engagement year" },
     ],
+    services: ["Web", "Cloud", "Strategy"],
+    duration: "Multi-quarter",
+    team: "Lead engineer + pod",
+    location: "Remote",
   },
   {
-    slug: "helios-energy",
-    client: "Helios Energy",
-    industry: "IoT",
-    year: "2024",
-    title: "Mission control for 50K solar sites.",
+    slug: "upcoming-events",
+    client: "Upcoming Events",
+    industry: "Events",
+    year: "2022",
+    url: "https://www.upcomingevents.com/philadelphia",
+    title: "End-to-end ownership of an event staffing platform.",
     blurb:
-      "A live operations dashboard ingesting 1M events/min, with anomaly detection and one-click failover across regions.",
-    metric: { value: "50K", label: "Connected devices" },
-    tags: ["Kafka", "Go", "Kubernetes", "Grafana"],
+      "Led the build for Upcoming Events — agile delivery from requirements through deployment for a regional event discovery and staffing site.",
+    summary:
+      "Managed the project end-to-end: stakeholder discovery, intuitive UI design, robust backend systems, and an agile cadence that kept stakeholders close from kickoff to launch.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["Agile", "Full-stack", "UX", "Deployment"],
     hue: "rgba(251,191,36,0.22)",
     swatch: "#FBBF24",
-    visual: <IoTVisual />,
+    heroImage:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Crowd at an outdoor event at golden hour",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=80",
+        alt: "Event crowd at a music festival",
+        caption: "User-centric discovery flows for event-goers",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=80",
+        alt: "Concert lights and audience",
+        caption: "Regional content tuned for the Philadelphia market",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80",
+        alt: "Engineers reviewing delivery roadmap on a screen",
+        caption: "Agile lifecycle from inception through deployment",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We led the Upcoming Events build end-to-end — applying agile methodology across the lifecycle, gathering requirements, designing the experience, and shipping the backend that powers it.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Upcoming Events",
+      avatar:
+        "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&q=80",
+    },
     challenge:
-      "Helios was flying blind across 50K sites. Outages were detected by customers calling in. The team needed real-time visibility and automated remediation.",
+      "Upcoming Events needed someone to own the build — not just code, but the whole lifecycle from stakeholder discovery through a confident production launch.",
     approach: [
-      "Architected a Kafka pipeline for 1.2M events/min with replay.",
-      "Trained anomaly models on 18 months of historical telemetry.",
-      "Built a control plane in Go for one-click region failover.",
-      "Shipped operator dashboards with role-based runbooks.",
+      "Ran requirements workshops with stakeholders and partners.",
+      "Designed intuitive flows for both event-goers and organisers.",
+      "Built backend systems with deployment confidence from day one.",
+      "Delivered against an agile cadence with weekly stakeholder demos.",
     ],
     outcome: [
-      { value: "50K", label: "Devices online" },
-      { value: "99.97%", label: "Fleet uptime" },
-      { value: "−68%", label: "Mean time to detect" },
+      { value: "Live", label: "Shipped to production" },
+      { value: "End-to-end", label: "Delivery ownership" },
+      { value: "Agile", label: "Operating cadence" },
     ],
+    services: ["Web", "Strategy", "Design"],
+    duration: "Multi-month",
+    team: "Lead engineer + pod",
+    location: "Remote",
+  },
+  {
+    slug: "go-outfitter",
+    client: "Go Outfitter",
+    industry: "Commerce",
+    year: "2023",
+    url: "https://www.gooutfitter.com/",
+    title: "A marketplace built for serious outdoor buyers.",
+    blurb:
+      "Full-stack development on Go Outfitter — an online marketplace with intuitive navigation, secure payments, and the polish outdoor shoppers expect.",
+    summary:
+      "We contributed across the stack on Go Outfitter, shaping the buyer journey, hardening payments, and shipping the merchandising surfaces that make discovery feel effortless.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["E-commerce", "Payments", "React", "Node.js"],
+    hue: "rgba(46,184,114,0.22)",
+    swatch: "#2EB872",
+    heroImage:
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Outdoor gear laid out on a wooden table",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=80",
+        alt: "Hiker overlooking a valley",
+        caption: "Designed for the audience, not the algorithm",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1455156218388-5e61b526818b?auto=format&fit=crop&w=1200&q=80",
+        alt: "Outdoor gear arranged for product photography",
+        caption: "Merchandising surfaces tuned for browse-to-buy",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80",
+        alt: "Mountain trail with adventurer",
+        caption: "Trust and secure payments at the heart of checkout",
+      },
+    ],
+    testimonial: {
+      quote:
+        "On Go Outfitter we contributed full-stack — pairing software engineering depth with a focus on user-friendly navigation and a checkout shoppers actually trust.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Go Outfitter",
+      avatar:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=240&q=80",
+    },
+    challenge:
+      "Go Outfitter needed an online marketplace where outdoor shoppers could find gear without friction and check out with confidence.",
+    approach: [
+      "Designed buyer journeys aligned to real outdoor purchasing intent.",
+      "Built reusable storefront primitives and product surfaces.",
+      "Implemented secure payment flows with end-to-end validation.",
+      "Tuned performance for browse-heavy sessions on mobile.",
+    ],
+    outcome: [
+      { value: "Live", label: "Shipped to production" },
+      { value: "Full-stack", label: "Delivery scope" },
+      { value: "2023", label: "Engagement year" },
+    ],
+    services: ["Web", "Design"],
+    duration: "Multi-month",
+    team: "Full-stack pod",
+    location: "Remote",
+  },
+  {
+    slug: "event-staffing",
+    client: "Event Staffing",
+    industry: "Events",
+    year: "2022",
+    url: "https://eventstaffing.co.uk/",
+    title: "Connecting organisers with the people who make events happen.",
+    blurb:
+      "Member of the build team for Event Staffing — designing intuitive interfaces and the backend that powers organiser-to-staff coordination.",
+    summary:
+      "We worked on Event Staffing as part of the core delivery team, shaping the UI for organisers and crew while implementing the backend logic that keeps roster operations honest.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["UI Design", "Backend", "Scheduling", "Coordination"],
+    hue: "rgba(99,102,241,0.22)",
+    swatch: "#6366F1",
+    heroImage:
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Event production crew setting up a stage",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1503428593586-e225b39bddfe?auto=format&fit=crop&w=1200&q=80",
+        alt: "Crew building an event stage",
+        caption: "Roster and shift logic mapped to real operations",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+        alt: "Event audience at golden hour",
+        caption: "Organiser UI tuned for fast-moving event ops",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80",
+        alt: "Engineers reviewing the platform on a screen",
+        caption: "Backend hardened for shift coordination at scale",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We helped build Event Staffing — designing intuitive UIs for organisers and crew, and implementing the backend systems that keep shift coordination clean and verifiable.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Event Staffing",
+      avatar:
+        "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?auto=format&fit=crop&w=240&q=80",
+    },
+    challenge:
+      "Event Staffing needed software that mirrored how organisers and crew actually work — shifts, roles, communications — without becoming yet another back-office tool.",
+    approach: [
+      "Designed intuitive interfaces for organiser and staff workflows.",
+      "Built backend logic for shifts, roles, and roster state.",
+      "Implemented coordination flows for fast-moving event ops.",
+      "Hardened the platform for reliability around event peaks.",
+    ],
+    outcome: [
+      { value: "Live", label: "Shipped to production" },
+      { value: "Core team", label: "Engagement role" },
+      { value: "2022", label: "Engagement year" },
+    ],
+    services: ["Web", "Design"],
+    duration: "Multi-month",
+    team: "Build team",
+    location: "Remote",
+  },
+  {
+    slug: "cancelo",
+    client: "Cancelo",
+    industry: "SaaS",
+    year: "2023",
+    url: "https://cancelo.io/",
+    title: "Subscription management without the friction.",
+    blurb:
+      "Member of the Cancelo build team — engineering the backend and interfaces that let users see, edit, and stop subscriptions on their terms.",
+    summary:
+      "We worked on Cancelo as part of the delivery team, building efficient backend services and intuitive UIs that turn subscription chaos into something users actually control.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["SaaS", "Payments", "TypeScript", "Subscriptions"],
+    hue: "rgba(217,119,87,0.22)",
+    swatch: "#D97757",
+    heroImage:
+      "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Mobile app showing subscriptions and recurring charges",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1200&q=80",
+        alt: "Subscription dashboard on a phone",
+        caption: "All recurring charges in one accountable view",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+        alt: "Analytics dashboard showing spend over time",
+        caption: "User-friendly visibility into spend patterns",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80",
+        alt: "Paper bills and receipts beside a laptop",
+        caption: "Cancellation flows that respect the user, not the merchant",
+      },
+    ],
+    testimonial: {
+      quote:
+        "On Cancelo we played a key engineering role — shipping efficient backend systems and intuitive interfaces so users can manage and stop subscriptions without the dark-pattern detour.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Cancelo",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&q=80",
+    },
+    challenge:
+      "Cancelo's customers needed an honest, fast way to see and cancel subscriptions — without the dark patterns that protect the merchant over the user.",
+    approach: [
+      "Built efficient backend services for subscription state and payments.",
+      "Designed UIs that surface charges and cancellations clearly.",
+      "Implemented secure integrations across multiple payment providers.",
+      "Tuned the experience for trust and speed at the moment that matters.",
+    ],
+    outcome: [
+      { value: "Live", label: "Shipped to production" },
+      { value: "Build team", label: "Engagement role" },
+      { value: "2023", label: "Engagement year" },
+    ],
+    services: ["Web", "Cloud"],
+    duration: "Multi-month",
+    team: "Build team",
+    location: "Remote",
+  },
+  {
+    slug: "assemble",
+    client: "Assemble",
+    industry: "Collaboration",
+    year: "2023",
+    url: "https://assemble.fyi/",
+    title: "A workspace built for the way remote teams actually work.",
+    blurb:
+      "Member of the Assemble build team — shipping intuitive interfaces and seamless communication features for remote-first collaboration.",
+    summary:
+      "We contributed to Assemble's build team, shaping a collaborative workspace tailored to remote teams. Software engineering depth applied to UI craft and the real-time plumbing that makes collaboration feel close.",
+    metric: { value: "Live", label: "In production" },
+    tags: ["Collaboration", "Realtime", "TypeScript", "React"],
+    hue: "rgba(34,211,238,0.22)",
+    swatch: "#22D3EE",
+    heroImage:
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1800&q=80",
+    heroAlt: "Distributed team collaborating across video and chat",
+    gallery: [
+      {
+        image:
+          "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+        alt: "Remote team meeting on a laptop",
+        caption: "Real-time collaboration that respects distance",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
+        alt: "Team brainstorming with sticky notes",
+        caption: "Async + sync flows for how teams actually work",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80",
+        alt: "Engineer working from a home office",
+        caption: "Built for remote-first teams from the ground up",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We helped build Assemble — applying software engineering craft to intuitive UI and the seamless communication features that make distributed collaboration feel close.",
+      name: "Codlinx Engineering",
+      role: "Engagement note · Assemble",
+      avatar:
+        "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=240&q=80",
+    },
+    challenge:
+      "Assemble's audience expected the polish of a co-located workspace inside a remote-first product — without the latency or seams of bolted-on tools.",
+    approach: [
+      "Built intuitive interfaces for shared and individual workspaces.",
+      "Implemented seamless real-time communication features.",
+      "Shaped collaboration flows around remote-team rituals.",
+      "Hardened the platform with type-safety and performance budgets.",
+    ],
+    outcome: [
+      { value: "Live", label: "Shipped to production" },
+      { value: "Build team", label: "Engagement role" },
+      { value: "2023", label: "Engagement year" },
+    ],
+    services: ["Web", "Design"],
+    duration: "Multi-month",
+    team: "Build team",
+    location: "Remote",
   },
 ];
 
-export function HealthVisual() {
-  const w = 600;
-  const h = 360;
-  const path =
-    "M0 200 L80 200 L100 200 L115 140 L130 260 L150 100 L170 200 L260 200 L280 200 L295 150 L310 250 L330 200 L600 200";
-  return (
-    <div className="absolute inset-0 flex flex-col gap-3 p-6">
-      <div className="flex items-center gap-3">
-        <div
-          className="grid h-10 w-10 place-items-center rounded-xl"
-          style={{ backgroundColor: ACCENT }}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            className="h-5 w-5"
-            fill="white"
-            aria-hidden
-            style={{
-              animation: "codlinx-heartbeat 1.4s ease-in-out infinite",
-              transformOrigin: "center",
-            }}
-          >
-            <path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11z" />
-          </svg>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-wider text-white/50">
-            Patient · Demo, J.
-          </div>
-          <div className="text-sm font-semibold text-white">
-            Heart rate · stable
-          </div>
-        </div>
-        <div className="ml-auto rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[10px] uppercase tracking-wider text-white/60">
-          live
-        </div>
-      </div>
-      <div className="relative flex-1 overflow-hidden rounded-xl border border-white/[0.06] bg-black/40">
-        <svg
-          viewBox={`0 0 ${w} ${h}`}
-          preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full"
-        >
-          {Array.from({ length: 8 }).map((_, i) => (
-            <line
-              key={i}
-              x1="0"
-              x2={w}
-              y1={(h / 8) * (i + 1)}
-              y2={(h / 8) * (i + 1)}
-              stroke="rgba(255,255,255,0.04)"
-            />
-          ))}
-          <path
-            d={path}
-            fill="none"
-            stroke={ACCENT}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeDasharray="900"
-            style={{ animation: "codlinx-stream-line 3s linear infinite" }}
-          />
-        </svg>
-      </div>
-      <div className="grid grid-cols-3 gap-2">
-        {[
-          { l: "BPM", v: "72" },
-          { l: "SpO₂", v: "98%" },
-          { l: "Temp", v: "36.7°" },
-        ].map((s) => (
-          <div
-            key={s.l}
-            className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2"
-          >
-            <div className="text-[10px] uppercase tracking-wider text-white/40">
-              {s.l}
-            </div>
-            <div className="text-sm font-semibold text-white">{s.v}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+export const PROJECTS: Project[] = SEEDS.map((s) => ({
+  ...s,
+  visual: (
+    <LiveSitePreview
+      url={s.url}
+      swatch={s.swatch}
+      hue={s.hue}
+      label={s.client}
+    />
+  ),
+}));
 
-export function FintechVisual() {
-  const candles = [
-    { o: 60, c: 80, h: 90, l: 50, up: true },
-    { o: 80, c: 70, h: 85, l: 60, up: false },
-    { o: 70, c: 100, h: 110, l: 65, up: true },
-    { o: 100, c: 90, h: 105, l: 80, up: false },
-    { o: 90, c: 130, h: 140, l: 85, up: true },
-    { o: 130, c: 120, h: 135, l: 105, up: false },
-    { o: 120, c: 160, h: 170, l: 115, up: true },
-    { o: 160, c: 150, h: 165, l: 140, up: false },
-    { o: 150, c: 185, h: 195, l: 145, up: true },
-    { o: 185, c: 200, h: 215, l: 175, up: true },
-  ];
-  const max = 220;
-  return (
-    <div className="absolute inset-0 flex flex-col p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="text-xs uppercase tracking-wider text-white/40">
-            ATLAS · ETH/USD
-          </div>
-          <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-2xl font-semibold text-white">$3,418.20</span>
-            <span
-              className="rounded-full px-2 py-0.5 text-xs font-medium"
-              style={{
-                backgroundColor: "rgba(63,201,180,0.18)",
-                color: ACCENT,
-              }}
-            >
-              +4.82%
-            </span>
-          </div>
-        </div>
-        <div className="flex gap-1 text-[10px]">
-          {["1H", "1D", "1W", "1M"].map((t, i) => (
-            <span
-              key={t}
-              className={`rounded-md px-2 py-1 ${
-                i === 1 ? "bg-white/10 text-white" : "text-white/40"
-              }`}
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="relative mt-4 flex-1">
-        <div className="absolute inset-0 flex items-end gap-1.5">
-          {candles.map((c, i) => (
-            <div
-              key={i}
-              className="relative flex-1"
-              style={{
-                animation: `codlinx-candle 1.6s ease-out ${i * 0.1}s both`,
-                transformOrigin: "bottom",
-              }}
-            >
-              <div
-                className="absolute left-1/2 w-px -translate-x-1/2"
-                style={{
-                  bottom: `${(c.l / max) * 100}%`,
-                  height: `${((c.h - c.l) / max) * 100}%`,
-                  backgroundColor: c.up ? ACCENT : "#f472b6",
-                  opacity: 0.6,
-                }}
-              />
-              <div
-                className="absolute left-0 right-0 rounded-sm"
-                style={{
-                  bottom: `${(Math.min(c.o, c.c) / max) * 100}%`,
-                  height: `${(Math.abs(c.c - c.o) / max) * 100}%`,
-                  backgroundColor: c.up ? ACCENT : "#f472b6",
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
-        {[
-          { l: "BTC", v: "$67,420", up: true },
-          { l: "SOL", v: "$184.12", up: true },
-          { l: "AVAX", v: "$38.04", up: false },
-        ].map((t) => (
-          <div
-            key={t.l}
-            className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-1.5"
-          >
-            <span className="font-semibold text-white/80">{t.l}</span>
-            <span style={{ color: t.up ? ACCENT : "#f472b6" }}>{t.v}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export function AIVisual() {
-  return (
-    <div className="absolute inset-0 flex flex-col gap-3 p-6">
-      <div className="flex items-center gap-2">
-        <div
-          className="grid h-7 w-7 place-items-center rounded-lg text-[11px] font-bold text-black"
-          style={{ backgroundColor: ACCENT }}
-        >
-          L
-        </div>
-        <span className="text-sm font-semibold text-white">Lumen Research</span>
-        <span className="ml-auto rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[10px] uppercase tracking-wider text-white/60">
-          model · v4
-        </span>
-      </div>
-      <div className="self-end max-w-[80%] rounded-2xl rounded-tr-sm bg-white/[0.08] px-3 py-2 text-sm text-white">
-        Summarize Q3 risks across all internal memos.
-      </div>
-      <div className="max-w-[90%] rounded-2xl rounded-tl-sm border border-white/[0.06] bg-black/40 px-3 py-2 backdrop-blur-sm">
-        <div className="text-[13px] leading-relaxed text-white/85">
-          {[
-            "Across",
-            "47",
-            "memos,",
-            "Q3",
-            "risk",
-            "concentrates",
-            "in:",
-            "supply-chain",
-            "(38%),",
-            "regulatory",
-            "(22%),",
-            "and",
-            "FX",
-            "(18%).",
-          ].map((w, i) => (
-            <span
-              key={i}
-              className="inline-block"
-              style={{
-                animation: `codlinx-token 4s ease-out ${i * 0.18}s infinite`,
-              }}
-            >
-              {w}&nbsp;
-            </span>
-          ))}
-        </div>
-        <div className="mt-2 flex flex-wrap gap-1">
-          {["memo-0142.pdf", "q3-strategy.md", "ops-review.docx"].map((s) => (
-            <span
-              key={s}
-              className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] text-white/60"
-            >
-              <svg
-                viewBox="0 0 16 16"
-                className="h-2.5 w-2.5"
-                style={{ color: ACCENT }}
-                fill="currentColor"
-                aria-hidden
-              >
-                <path d="M4 1h6l4 4v10H4z" opacity=".6" />
-              </svg>
-              {s}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="mt-auto flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 backdrop-blur-md">
-        <span
-          className="h-1.5 w-1.5 rounded-full"
-          style={{
-            backgroundColor: ACCENT,
-            animation: "codlinx-grid-pulse 1.4s ease-in-out infinite",
-          }}
-        />
-        <span className="text-xs text-white/40">
-          Ask anything across 200K docs…
-        </span>
-      </div>
-    </div>
-  );
-}
-
-export function IoTVisual() {
-  const cells = Array.from({ length: 35 }).map((_, i) => i);
-  return (
-    <div className="absolute inset-0 flex flex-col p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="text-xs uppercase tracking-wider text-white/40">
-            Helios · Fleet
-          </div>
-          <div className="mt-1 text-2xl font-semibold text-white">
-            50,124{" "}
-            <span className="text-sm font-medium text-white/40">
-              devices online
-            </span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] uppercase tracking-wider text-white/60">
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{
-              backgroundColor: ACCENT,
-              animation: "codlinx-grid-pulse 1.2s ease-in-out infinite",
-            }}
-          />
-          1.2M evt/min
-        </div>
-      </div>
-      <div className="mt-4 grid flex-1 grid-cols-7 gap-1.5">
-        {cells.map((i) => {
-          const fail = i % 13 === 7;
-          const warn = i % 11 === 4;
-          return (
-            <div
-              key={i}
-              className="aspect-square rounded-md border border-white/[0.06]"
-              style={{
-                backgroundColor: fail
-                  ? "rgba(244,114,182,0.5)"
-                  : warn
-                  ? "rgba(251,191,36,0.5)"
-                  : "rgba(63,201,180,0.18)",
-                animation: `codlinx-grid-pulse ${1.8 + (i % 5) * 0.3}s ease-in-out ${(i % 7) * 0.1}s infinite`,
-              }}
-            />
-          );
-        })}
-      </div>
-      <div className="mt-3 flex items-center gap-4 text-[11px]">
-        <span className="flex items-center gap-1.5">
-          <span
-            className="h-2 w-2 rounded-full"
-            style={{ backgroundColor: ACCENT }}
-          />
-          <span className="text-white/60">Healthy 99.2%</span>
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-amber-300" />
-          <span className="text-white/60">Warn 0.6%</span>
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-pink-400" />
-          <span className="text-white/60">Down 0.2%</span>
-        </span>
-      </div>
-    </div>
-  );
+export function getProjectBySlug(slug: string): Project | undefined {
+  return PROJECTS.find((p) => p.slug === slug);
 }

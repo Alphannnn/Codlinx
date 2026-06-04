@@ -114,12 +114,6 @@ function ClosingStatement() {
               </svg>
             </span>
           </Link>
-          <a
-            href="mailto:hello@codlinx.com"
-            className="inline-flex h-12 items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-medium text-white/85 transition-colors duration-200 hover:border-white/35 hover:text-white"
-          >
-            Or just say hi
-          </a>
         </div>
       </div>
     </div>
@@ -166,14 +160,27 @@ function Brand() {
           label="Email"
           value={
             <a
-              href="mailto:hello@codlinx.com"
+              href="mailto:info@codlinx.com"
               className="text-white/85 transition-colors hover:text-white"
             >
-              hello@codlinx.com
+              info@codlinx.com
             </a>
           }
         />
         <MetaLine label="Studios" value="London · Lahore · Remote" />
+        <MetaLine
+          label="Office"
+          value={
+            <a
+              href="https://maps.google.com/?q=7+Parramatta+Square,+Level+40,+10+Darcy+Street,+Parramatta+NSW+2150"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/85 transition-colors hover:text-white"
+            >
+              7 Parramatta Square, Level 40, 10 Darcy Street, Parramatta, NSW, 2150
+            </a>
+          }
+        />
         <MetaLine label="Established" value="2019" />
       </dl>
     </div>
@@ -206,22 +213,53 @@ function Columns() {
             {col.title}
           </div>
           <ul className="flex flex-col gap-3">
-            {col.links.map((link) => (
-              <li key={link.label}>
-                <Link
-                  href={link.href}
-                  className="group inline-flex items-center text-[15px] text-white/70 transition-colors duration-200 hover:text-white"
-                >
-                  <span className="relative">
-                    {link.label}
-                    <span
+            {col.links.map((link) => {
+              const external = link.href.startsWith("http");
+              const inner = (
+                <span className="relative inline-flex items-center gap-1">
+                  {link.label}
+                  {external && (
+                    <svg
+                      viewBox="0 0 16 16"
+                      className="h-3 w-3 text-white/40 transition-colors group-hover:text-white/70"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       aria-hidden
-                      className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#3FC9B4]/70 transition-all duration-300 group-hover:w-full"
-                    />
-                  </span>
-                </Link>
-              </li>
-            ))}
+                    >
+                      <path d="M6 4h6v6M12 4l-8 8" />
+                    </svg>
+                  )}
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#3FC9B4]/70 transition-all duration-300 group-hover:w-full"
+                  />
+                </span>
+              );
+              return (
+                <li key={link.label}>
+                  {external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center text-[15px] text-white/70 transition-colors duration-200 hover:text-white"
+                    >
+                      {inner}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="group inline-flex items-center text-[15px] text-white/70 transition-colors duration-200 hover:text-white"
+                    >
+                      {inner}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}

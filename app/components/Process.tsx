@@ -76,7 +76,10 @@ export default function Process() {
   }, []);
 
   return (
-    <section className="relative isolate overflow-hidden bg-black py-24 text-white sm:py-32">
+    <section
+      id="process"
+      className="relative isolate overflow-hidden bg-black py-24 text-white sm:py-32"
+    >
       <div
         aria-hidden
         className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
@@ -124,22 +127,22 @@ export default function Process() {
         <div ref={railRef} className="relative mt-20">
           <div
             aria-hidden
-            className="pointer-events-none absolute left-4 top-0 h-full w-px bg-white/[0.08] md:left-1/2 md:-translate-x-1/2"
+            className="pointer-events-none absolute left-0 right-0 top-[18px] hidden h-px bg-white/[0.08] lg:block"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute left-4 top-0 w-px md:left-1/2 md:-translate-x-1/2"
+            className="pointer-events-none absolute left-0 top-[18px] hidden h-px lg:block"
             style={{
-              height: `${progress * 100}%`,
-              background: `linear-gradient(180deg, transparent, ${ACCENT} 30%, ${ACCENT})`,
+              width: `${progress * 100}%`,
+              background: `linear-gradient(90deg, ${ACCENT}, ${ACCENT} 70%, transparent)`,
               boxShadow: `0 0 12px ${ACCENT}`,
-              transition: "height 0.3s ease-out",
+              transition: "width 0.3s ease-out",
             }}
           />
 
-          <div className="flex flex-col gap-16 md:gap-24">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-6">
             {PHASES.map((p, i) => (
-              <PhaseRow key={p.num} phase={p} index={i} />
+              <PhaseCard key={p.num} phase={p} index={i} />
             ))}
           </div>
         </div>
@@ -170,17 +173,16 @@ export default function Process() {
   );
 }
 
-function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
+function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const reverse = index % 2 === 1;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.25 }
+      { threshold: 0.2 }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -189,50 +191,39 @@ function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
   return (
     <div
       ref={ref}
-      className={`relative grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16 ${
-        reverse ? "md:[&>*:first-child]:order-2" : ""
+      className={`relative flex flex-col transition-all duration-700 ${
+        visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
       }`}
+      style={{ transitionDelay: `${index * 80}ms` }}
     >
       <div
-        className={`relative pl-12 md:pl-0 transition-all duration-700 ${
-          visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-        } ${reverse ? "md:pl-8 md:text-left" : "md:pr-8 md:text-right"}`}
+        aria-hidden
+        className="relative z-10 mx-auto grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black text-[11px] font-semibold tracking-wider lg:mx-0"
+        style={{
+          boxShadow: visible
+            ? `0 0 0 4px rgba(63,201,180,0.12), 0 0 24px ${ACCENT}`
+            : "none",
+          transition: "box-shadow 0.6s ease-out",
+        }}
       >
-        <div
-          aria-hidden
-          className={`absolute left-4 top-2 grid h-8 w-8 -translate-x-1/2 place-items-center rounded-full border border-white/15 bg-black text-[11px] font-semibold tracking-wider text-white/80 md:left-auto ${
-            reverse
-              ? "md:left-[-2rem] md:right-auto md:translate-x-0"
-              : "md:right-[-2rem] md:left-auto md:translate-x-1/2"
-          }`}
-          style={{
-            boxShadow: visible
-              ? `0 0 0 4px rgba(63,201,180,0.12), 0 0 24px ${ACCENT}`
-              : "none",
-            transition: "box-shadow 0.6s ease-out",
-          }}
-        >
-          <span style={{ color: visible ? ACCENT : "white" }}>{phase.num}</span>
-        </div>
+        <span style={{ color: visible ? ACCENT : "white" }}>{phase.num}</span>
+      </div>
 
-        <div className="text-xs uppercase tracking-[0.2em] text-white/40">
+      <div className="mt-5 text-center lg:text-left">
+        <div className="text-[11px] uppercase tracking-[0.2em] text-white/40">
           {phase.duration}
         </div>
-        <h3 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+        <h3 className="mt-1.5 text-2xl font-semibold tracking-tight">
           {phase.title}
         </h3>
-        <p className="mt-3 max-w-lg text-base leading-relaxed text-white/60 md:ml-auto md:mr-0 md:max-w-md">
+        <p className="mt-2.5 text-sm leading-relaxed text-white/60">
           {phase.description}
         </p>
-        <div
-          className={`mt-5 flex flex-wrap gap-2 ${
-            reverse ? "" : "md:justify-end"
-          }`}
-        >
+        <div className="mt-4 flex flex-wrap justify-center gap-1.5 lg:justify-start">
           {phase.chips.map((c) => (
             <span
               key={c}
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium text-white/70 backdrop-blur-sm"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-white/70 backdrop-blur-sm"
             >
               <span
                 className="h-1 w-1 rounded-full"
@@ -244,19 +235,13 @@ function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
         </div>
       </div>
 
-      <div
-        className={`relative pl-12 md:pl-0 transition-all delay-150 duration-700 ${
-          visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-        }`}
-      >
-        <div className="relative h-[280px] overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-5">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -top-12 right-0 h-40 w-40 rounded-full opacity-30 blur-3xl"
-            style={{ backgroundColor: ACCENT }}
-          />
-          {phase.visual}
-        </div>
+      <div className="relative mt-6 h-[220px] overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-4">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-12 right-0 h-40 w-40 rounded-full opacity-30 blur-3xl"
+          style={{ backgroundColor: ACCENT }}
+        />
+        {phase.visual}
       </div>
     </div>
   );
@@ -270,7 +255,7 @@ function DiscoverVisual() {
     { t: "Mobile-first segment +38%", c: "border-l-violet-400" },
   ];
   return (
-    <div className="absolute inset-5 flex flex-col gap-2">
+    <div className="absolute inset-4 flex flex-col gap-2">
       {notes.map((n, i) => (
         <div
           key={i}
@@ -298,7 +283,7 @@ function DiscoverVisual() {
 
 function DesignVisual() {
   return (
-    <div className="absolute inset-5 flex items-center justify-center">
+    <div className="absolute inset-4 flex items-center justify-center">
       <div className="grid h-full w-full grid-cols-3 gap-2">
         <div className="col-span-1 flex flex-col gap-2">
           <div className="flex-1 rounded-lg border border-white/[0.08] bg-white/[0.03] p-2">
@@ -356,7 +341,7 @@ function EngineerVisual() {
     { msg: "test: cover retry edge case", user: "noor", tag: "pr-481" },
   ];
   return (
-    <div className="absolute inset-5 flex flex-col gap-2 font-mono">
+    <div className="absolute inset-4 flex flex-col gap-2 font-mono">
       <div className="mb-1 flex items-center justify-between text-[10px] uppercase tracking-wider text-white/40">
         <span className="flex items-center gap-1.5">
           <span
@@ -408,7 +393,7 @@ function ScaleVisual() {
   const areaPath = `${linePath} L ${w} ${h} L 0 ${h} Z`;
 
   return (
-    <div className="absolute inset-5 flex flex-col">
+    <div className="absolute inset-4 flex flex-col">
       <div className="mb-2 flex items-end justify-between">
         <div>
           <div className="text-[10px] uppercase tracking-wider text-white/40">

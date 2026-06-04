@@ -5,6 +5,17 @@ import Link from "next/link";
 
 const ACCENT = "#3FC9B4";
 
+type Tech = { name: string; color: string };
+
+type Highlight = { value: string; label: string };
+
+type CaseRef = {
+  client: string;
+  industry: string;
+  metric: { value: string; label: string };
+  slug: string;
+};
+
 type Service = {
   slug: string;
   number: string;
@@ -13,10 +24,36 @@ type Service = {
   tagline: string;
   description: string;
   deliverables: string[];
-  stack: string[];
+  stack: (Tech | string)[];
+  highlights?: Highlight[];
+  case?: CaseRef;
   duration: string;
   engagement: string;
   icon: ReactNode;
+};
+
+// Brand-ish colors per technology — used as the small dot on each pill.
+const C = {
+  blue: "#3B82F6",
+  cyan: "#06B6D4",
+  teal: "#14B8A6",
+  green: "#10B981",
+  emerald: "#059669",
+  yellow: "#F59E0B",
+  amber: "#FBBF24",
+  orange: "#F97316",
+  red: "#EF4444",
+  rose: "#F43F5E",
+  pink: "#EC4899",
+  purple: "#8B5CF6",
+  violet: "#7C3AED",
+  indigo: "#6366F1",
+  sky: "#0EA5E9",
+  slate: "#94A3B8",
+  zinc: "#71717A",
+  white: "#E4E4E7",
+  black: "#18181B",
+  accent: ACCENT,
 };
 
 const SERVICES: Service[] = [
@@ -34,7 +71,35 @@ const SERVICES: Service[] = [
       "Custom CMS, admin panels, and dashboards",
       "API design, integrations, and data modeling",
     ],
-    stack: ["Next.js", "React", "TypeScript", "Postgres", "Prisma", "tRPC"],
+    stack: [
+      { name: "Next.js", color: C.white },
+      { name: "React", color: C.cyan },
+      { name: "TypeScript", color: C.blue },
+      { name: "Remix", color: C.indigo },
+      { name: "Astro", color: C.orange },
+      { name: "Tailwind CSS", color: C.cyan },
+      { name: "Node.js", color: C.green },
+      { name: "tRPC", color: C.indigo },
+      { name: "GraphQL", color: C.pink },
+      { name: "Prisma", color: C.indigo },
+      { name: "Drizzle", color: C.green },
+      { name: "Postgres", color: C.blue },
+      { name: "Redis", color: C.red },
+      { name: "Stripe", color: C.violet },
+      { name: "Vercel", color: C.black },
+      { name: "Playwright", color: C.emerald },
+    ],
+    highlights: [
+      { value: "<1.2s", label: "p75 LCP shipped" },
+      { value: "100%", label: "Type-safe boundaries" },
+      { value: "120+", label: "Web products" },
+    ],
+    case: {
+      client: "Flote",
+      industry: "Marketing Automation",
+      metric: { value: "Live", label: "In production" },
+      slug: "flote",
+    },
     duration: "6–16 weeks",
     engagement: "Fixed-scope · T&M",
     icon: <WebIcon />,
@@ -53,7 +118,34 @@ const SERVICES: Service[] = [
       "Offline-first sync, push, deep linking",
       "App Store / Play Store submission & ASO",
     ],
-    stack: ["React Native", "Expo", "Swift", "Kotlin", "Firebase"],
+    stack: [
+      { name: "Swift", color: C.orange },
+      { name: "SwiftUI", color: C.sky },
+      { name: "Kotlin", color: C.purple },
+      { name: "Jetpack Compose", color: C.green },
+      { name: "React Native", color: C.cyan },
+      { name: "Expo", color: C.black },
+      { name: "Flutter", color: C.sky },
+      { name: "Firebase", color: C.amber },
+      { name: "Supabase", color: C.emerald },
+      { name: "RevenueCat", color: C.violet },
+      { name: "OneSignal", color: C.red },
+      { name: "Sentry", color: C.violet },
+      { name: "Amplitude", color: C.blue },
+      { name: "Fastlane", color: C.pink },
+      { name: "CodePush / EAS Update", color: C.indigo },
+    ],
+    highlights: [
+      { value: "Day 1", label: "App Store approvals" },
+      { value: "Offline-first", label: "Default behaviour" },
+      { value: "60fps", label: "On mid-range devices" },
+    ],
+    case: {
+      client: "Assemble",
+      industry: "Collaboration",
+      metric: { value: "Live", label: "In production" },
+      slug: "assemble",
+    },
     duration: "10–20 weeks",
     engagement: "Fixed-scope · Retainer",
     icon: <MobileIcon />,
@@ -72,7 +164,38 @@ const SERVICES: Service[] = [
       "Observability: logs, metrics, tracing, alerts",
       "Cost optimization and reliability engineering",
     ],
-    stack: ["AWS", "Kubernetes", "Terraform", "Datadog", "GitHub Actions"],
+    stack: [
+      { name: "AWS", color: C.orange },
+      { name: "GCP", color: C.blue },
+      { name: "Azure", color: C.sky },
+      { name: "Cloudflare", color: C.orange },
+      { name: "Fly.io", color: C.violet },
+      { name: "Kubernetes", color: C.blue },
+      { name: "Docker", color: C.cyan },
+      { name: "Terraform", color: C.purple },
+      { name: "Pulumi", color: C.violet },
+      { name: "Ansible", color: C.red },
+      { name: "GitHub Actions", color: C.black },
+      { name: "GitLab CI", color: C.orange },
+      { name: "ArgoCD", color: C.sky },
+      { name: "Datadog", color: C.violet },
+      { name: "Grafana", color: C.amber },
+      { name: "Prometheus", color: C.orange },
+      { name: "OpenTelemetry", color: C.indigo },
+      { name: "Sentry", color: C.violet },
+      { name: "PagerDuty", color: C.green },
+    ],
+    highlights: [
+      { value: "99.97%", label: "Fleet uptime delivered" },
+      { value: "−40%", label: "Typical cloud-bill cut" },
+      { value: "<15min", label: "Pager response on retainer" },
+    ],
+    case: {
+      client: "Traded",
+      industry: "Fintech",
+      metric: { value: "Live", label: "In production" },
+      slug: "traded",
+    },
     duration: "4–12 weeks",
     engagement: "Retainer · SRE-on-call",
     icon: <CloudIcon />,
@@ -133,6 +256,126 @@ const SERVICES: Service[] = [
     duration: "2–6 weeks",
     engagement: "Fixed-fee discovery",
     icon: <StrategyIcon />,
+  },
+  {
+    slug: "graphic-design",
+    number: "07",
+    label: "Graphic Design",
+    href: "/services/graphic-design",
+    tagline: "Brand visuals that stop the scroll.",
+    description:
+      "Logos, brand kits, ad creative, and social assets designed with intent — built to look sharp everywhere from a billboard to a feed thumbnail.",
+    deliverables: [
+      "Logo, identity, and full brand guidelines",
+      "Social media post and story templates",
+      "Ad creative, banners, and display sets",
+      "Pitch decks, one-pagers, and print collateral",
+    ],
+    stack: [
+      { name: "Figma", color: C.purple },
+      { name: "Photoshop", color: C.blue },
+      { name: "Illustrator", color: C.orange },
+      { name: "After Effects", color: C.violet },
+      { name: "Canva", color: C.cyan },
+    ],
+    highlights: [
+      { value: "48h", label: "Typical creative turnaround" },
+      { value: "Source", label: "Editable files handed over" },
+      { value: "∞", label: "Revisions on retainer" },
+    ],
+    duration: "1–4 weeks",
+    engagement: "Project · Retainer",
+    icon: <GraphicIcon />,
+  },
+  {
+    slug: "seo",
+    number: "08",
+    label: "SEO",
+    href: "/services/seo",
+    tagline: "Rank for the searches that actually convert.",
+    description:
+      "Technical fixes, content that earns its keywords, and authority building — a compounding channel engineered to grow traffic that turns into revenue.",
+    deliverables: [
+      "Technical SEO audit and Core Web Vitals fixes",
+      "Keyword research and content strategy",
+      "On-page optimization and internal linking",
+      "Backlinks, local SEO, and monthly reporting",
+    ],
+    stack: [
+      { name: "Ahrefs", color: C.blue },
+      { name: "Semrush", color: C.orange },
+      { name: "Google Search Console", color: C.green },
+      { name: "GA4", color: C.amber },
+      { name: "Screaming Frog", color: C.green },
+    ],
+    highlights: [
+      { value: "90+", label: "Lighthouse SEO targeted" },
+      { value: "3–6mo", label: "To meaningful ranking lift" },
+      { value: "Monthly", label: "Transparent reporting" },
+    ],
+    duration: "Ongoing · 3-mo min",
+    engagement: "Monthly retainer",
+    icon: <SeoIcon />,
+  },
+  {
+    slug: "social-media",
+    number: "09",
+    label: "Social Media Management",
+    href: "/services/social-media",
+    tagline: "A feed that builds an audience, on autopilot.",
+    description:
+      "Content calendars, on-brand posts, community management, and growth — we run your channels end to end so the brand shows up consistently and grows.",
+    deliverables: [
+      "Monthly content calendar and creative",
+      "Posting, scheduling, and channel management",
+      "Community management and DMs",
+      "Growth analytics and monthly reporting",
+    ],
+    stack: [
+      { name: "Instagram", color: C.pink },
+      { name: "LinkedIn", color: C.blue },
+      { name: "TikTok", color: C.black },
+      { name: "Meta Business Suite", color: C.blue },
+      { name: "Buffer", color: C.slate },
+    ],
+    highlights: [
+      { value: "12–20", label: "Posts shipped / month" },
+      { value: "Daily", label: "Community management" },
+      { value: "On-brand", label: "Every single asset" },
+    ],
+    duration: "Ongoing",
+    engagement: "Monthly retainer",
+    icon: <SocialIcon />,
+  },
+  {
+    slug: "social-media-marketing",
+    number: "10",
+    label: "Social Media Marketing",
+    href: "/services/social-media-marketing",
+    tagline: "Paid social that turns reach into revenue.",
+    description:
+      "Full-funnel paid social across Meta, Instagram, TikTok, and LinkedIn — built around creative testing, precise targeting, and conversion tracking that ties every dollar to a result.",
+    deliverables: [
+      "Paid social strategy and campaign structure",
+      "Meta, Instagram, TikTok, and LinkedIn campaigns",
+      "Ad creative and hook testing at scale",
+      "Conversion tracking, A/B tests, and ROAS reporting",
+    ],
+    stack: [
+      { name: "Meta Ads Manager", color: C.blue },
+      { name: "TikTok Ads", color: C.black },
+      { name: "LinkedIn Ads", color: C.blue },
+      { name: "GA4", color: C.amber },
+      { name: "Looker Studio", color: C.sky },
+    ],
+    highlights: [
+      { value: "ROAS", label: "The metric we optimize" },
+      { value: "Weekly", label: "Creative + bid iteration" },
+      { value: "Full-funnel", label: "Awareness to conversion" },
+    ],
+    duration: "Ongoing · 3-mo min",
+    engagement: "Retainer + ad spend",
+    icon: <AdsIcon />,
   },
 ];
 
@@ -210,8 +453,9 @@ function SectionHeader() {
           </span>
         </h2>
         <p className="mt-5 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg">
-          Six disciplines, one team. Pick a service to see what we deliver, the
-          stack, and how engagements typically run.
+          From engineering to marketing — ten disciplines, one team. Pick a
+          service to see what we deliver, the stack, and how engagements
+          typically run.
         </p>
       </div>
     </div>
@@ -389,18 +633,22 @@ function ServiceDetail({ service }: { service: Service }) {
           Stack &amp; tools
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
-          {service.stack.map((tech) => (
-            <span
-              key={tech}
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-900/[0.08] bg-white px-3 py-1 text-xs font-medium text-zinc-700 shadow-[0_2px_6px_-2px_rgba(0,0,0,0.06)]"
-            >
+          {service.stack.map((tech) => {
+            const t =
+              typeof tech === "string" ? { name: tech, color: ACCENT } : tech;
+            return (
               <span
-                className="h-1 w-1 rounded-full"
-                style={{ backgroundColor: ACCENT }}
-              />
-              {tech}
-            </span>
-          ))}
+                key={t.name}
+                className="inline-flex items-center gap-1.5 rounded-full border border-zinc-900/[0.08] bg-white px-3 py-1 text-xs font-medium text-zinc-700 shadow-[0_2px_6px_-2px_rgba(0,0,0,0.06)]"
+              >
+                <span
+                  className="h-1 w-1 rounded-full"
+                  style={{ backgroundColor: t.color }}
+                />
+                {t.name}
+              </span>
+            );
+          })}
         </div>
       </div>
 
@@ -634,6 +882,81 @@ function StrategyIcon() {
     >
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v5l3 2" />
+    </svg>
+  );
+}
+function GraphicIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="13.5" cy="6.5" r="1.5" />
+      <circle cx="17.5" cy="10.5" r="1.5" />
+      <circle cx="8.5" cy="7.5" r="1.5" />
+      <circle cx="6.5" cy="12.5" r="1.5" />
+      <path d="M12 21a9 9 0 1 1 9-9c0 2-1.8 3-3.5 3H15a2 2 0 0 0-1.5 3.3A1.5 1.5 0 0 1 12 21z" />
+    </svg>
+  );
+}
+function SeoIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21l-4.3-4.3" />
+      <path d="M8 11l2 2 3.5-3.5" />
+    </svg>
+  );
+}
+function SocialIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="6" cy="12" r="2.5" />
+      <circle cx="17" cy="6" r="2.5" />
+      <circle cx="17" cy="18" r="2.5" />
+      <path d="M8.2 10.8l6.6-3.6M8.2 13.2l6.6 3.6" />
+    </svg>
+  );
+}
+function AdsIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M3 10v4a1 1 0 0 0 1 1h2l5 4V5L6 9H4a1 1 0 0 0-1 1z" />
+      <path d="M16 9a4 4 0 0 1 0 6" />
+      <path d="M19 6.5a8 8 0 0 1 0 11" />
     </svg>
   );
 }

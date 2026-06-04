@@ -23,4 +23,233 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+::selection {
+  background-color: rgba(63, 201, 180, 0.3);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid #3FC9B4;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #3FC9B4;
+  outline-offset: 3px;
+}
+
+.codlinx-skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 999px;
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+  box-shadow: 0 8px 24px -10px rgba(0,0,0,0.4);
+}
+.codlinx-skip-link:focus,
+.codlinx-skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid #3FC9B4;
+  outline-offset: 3px;
+}
+
+@keyframes codlinx-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes codlinx-float-orb {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(40px, -30px, 0) scale(1.08); }
+}
+
+@keyframes codlinx-pulse-ring {
+  0%   { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes codlinx-shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+
+@keyframes codlinx-heartbeat {
+  0%, 100% { transform: scale(1); }
+  20%      { transform: scale(1.18); }
+  40%      { transform: scale(0.95); }
+  60%      { transform: scale(1.08); }
+}
+
+@keyframes codlinx-stream-line {
+  from { stroke-dashoffset: 900; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes codlinx-candle {
+  from { transform: scaleY(0); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes codlinx-token {
+  0%, 30%      { opacity: 0; transform: translateY(4px); }
+  40%, 100%    { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes codlinx-grid-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+@keyframes codlinx-progress {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes codlinx-fadeup {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes codlinx-spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes codlinx-noise {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-2%, 1%, 0); }
+  40% { transform: translate3d(1%, -2%, 0); }
+  60% { transform: translate3d(-1%, 2%, 0); }
+  80% { transform: translate3d(2%, -1%, 0); }
+}
+
+@keyframes codlinx-ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes codlinx-orbit {
+  from { transform: rotate(0deg) translateX(var(--orb-radius, 80px)) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(var(--orb-radius, 80px)) rotate(-360deg); }
+}
+
+@keyframes codlinx-blob {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 42% 38% 62% 58%; }
+  33% { border-radius: 62% 38% 47% 53% / 38% 62% 38% 62%; }
+  66% { border-radius: 38% 62% 53% 47% / 62% 33% 67% 38%; }
+}
+
+@keyframes codlinx-conic-spin {
+  to { --angle: 360deg; }
+}
+
+.codlinx-marquee-track {
+  animation: codlinx-marquee 38s linear infinite;
+  will-change: transform;
+}
+.codlinx-marquee:hover .codlinx-marquee-track {
+  animation-play-state: paused;
+}
+.codlinx-float-orb {
+  animation: codlinx-float-orb 14s ease-in-out infinite;
+  will-change: transform;
+}
+.codlinx-pulse-ring {
+  animation: codlinx-pulse-ring 2.2s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
+}
+.codlinx-shimmer {
+  animation: codlinx-shimmer 2.4s ease-in-out infinite;
+}
+.codlinx-ticker {
+  animation: codlinx-ticker 50s linear infinite;
+  will-change: transform;
+}
+.codlinx-spin-slow {
+  animation: codlinx-spin-slow 22s linear infinite;
+  will-change: transform;
+}
+.codlinx-blob {
+  animation: codlinx-blob 18s ease-in-out infinite;
+  will-change: border-radius;
+}
+
+.codlinx-grain::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.85'/></svg>");
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: codlinx-noise 1.4s steps(4) infinite;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.codlinx-conic-border {
+  position: relative;
+  isolation: isolate;
+}
+.codlinx-conic-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), transparent 0%, rgba(63,201,180,0.8) 25%, transparent 50%, rgba(63,201,180,0.8) 75%, transparent 100%);
+  animation: codlinx-conic-spin 5s linear infinite;
+  z-index: -1;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.codlinx-conic-border:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .codlinx-marquee-track,
+  .codlinx-float-orb,
+  .codlinx-pulse-ring,
+  .codlinx-shimmer,
+  .codlinx-ticker,
+  .codlinx-spin-slow,
+  .codlinx-blob,
+  .codlinx-grain::after,
+  .codlinx-conic-border::before {
+    animation: none !important;
+  }
 }

@@ -5,7 +5,26 @@ import { useEffect, useRef, useState } from "react";
 
 const ACCENT = "#3FC9B4";
 
+function useInView<T extends HTMLElement>(threshold = 0.2) {
+  const [visible, setVisible] = useState(false);
+  const [node, setNode] = useState<T | null>(null);
+
+  useEffect(() => {
+    if (!node) return;
+    const io = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setVisible(true),
+      { threshold }
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [node, threshold]);
+
+  return { attach: setNode, visible };
+}
+
 export default function Capabilities() {
+  const { attach: headerAttach, visible: headerVisible } =
+    useInView<HTMLDivElement>(0.3);
   return (
     <section className="relative isolate overflow-hidden bg-black py-24 text-white sm:py-32">
       <div
@@ -19,11 +38,22 @@ export default function Capabilities() {
       />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="flex flex-col items-center text-center">
+        <div
+          ref={headerAttach}
+          className={`flex flex-col items-center text-center transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            headerVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0"
+          }`}
+        >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white/70 backdrop-blur-md">
             <span
               className="h-1 w-1 rounded-full"
-              style={{ backgroundColor: ACCENT }}
+              style={{
+                backgroundColor: ACCENT,
+                boxShadow: `0 0 12px ${ACCENT}`,
+                animation: "codlinx-pulse-soft 2s ease-in-out infinite",
+              }}
             />
             Capabilities
           </span>
@@ -32,7 +62,9 @@ export default function Capabilities() {
             <span
               className="bg-clip-text text-transparent"
               style={{
-                backgroundImage: `linear-gradient(120deg, ${ACCENT}, #ffffff)`,
+                backgroundImage: `linear-gradient(120deg, ${ACCENT}, #ffffff, ${ACCENT})`,
+                backgroundSize: "200% 100%",
+                animation: "codlinx-gradient-pan 8s ease-in-out infinite",
               }}
             >
               Every layer of the stack.
@@ -139,7 +171,20 @@ function BentoCard({
   children: React.ReactNode;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setVisible(true),
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const handleMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const el = ref.current;
@@ -148,8 +193,17 @@ function BentoCard({
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
     setTilt({ x: (py - 0.5) * -6, y: (px - 0.5) * 6 });
+    el.style.setProperty("--mx", `${px * 100}%`);
+    el.style.setProperty("--my", `${py * 100}%`);
+    if (wrapRef.current) {
+      wrapRef.current.style.transform = `translate3d(${(px - 0.5) * -10}px, ${(py - 0.5) * -10}px, 0)`;
+    }
   };
-  const reset = () => setTilt({ x: 0, y: 0 });
+  const reset = () => {
+    setTilt({ x: 0, y: 0 });
+    if (wrapRef.current)
+      wrapRef.current.style.transform = "translate3d(0, 0, 0)";
+  };
 
   return (
     <Link
@@ -157,21 +211,35 @@ function BentoCard({
       href={href}
       onMouseMove={handleMove}
       onMouseLeave={reset}
-      className={`group relative flex h-[280px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 transition-colors duration-500 hover:border-white/15 ${className}`}
+      className={`group relative flex h-[280px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-white/20 ${className} ${
+        visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+      }`}
       style={{
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: "transform 0.3s ease-out, border-color 0.3s",
+        transition:
+          "transform 0.3s ease-out, border-color 0.3s, opacity 0.7s, translate 0.7s",
       }}
     >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-px -z-10 rounded-[15px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(120px circle at var(--mx, 50%) var(--my, 50%), rgba(63,201,180,0.55), transparent 70%)`,
+          filter: "blur(40px)",
+        }}
+      />
       <div
         aria-hidden
         className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
-          background: `radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(63,201,180,0.12), transparent 60%)`,
+          background: `radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(63,201,180,0.14), transparent 60%)`,
         }}
       />
-
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div
+        ref={wrapRef}
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+        style={{ transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" }}
+      >
         {children}
       </div>
 

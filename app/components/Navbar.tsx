@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 type NavLink = {
   label: string;
@@ -87,25 +88,14 @@ const ACCENT = "#3FC9B4";
 function CodlinxMark({ className = "" }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <span
-        className="grid h-9 w-9 place-items-center rounded-xl shadow-[0_8px_24px_-8px_rgba(63,201,180,0.55)]"
-        style={{ backgroundColor: ACCENT }}
-        aria-hidden
-      >
-        <svg
-          viewBox="0 0 32 32"
-          className="h-5 w-5"
-          fill="none"
-          stroke="white"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M22 8H12a4 4 0 0 0-4 4v12" />
-          <path d="M8 16h9" />
-          <path d="M8 24c4-1 7-3 9-6" />
-        </svg>
-      </span>
+      <Image
+        src="/codlinx-icon.png"
+        alt="Codlinx"
+        width={36}
+        height={36}
+        priority
+        className="h-9 w-9 rounded-xl shadow-[0_8px_24px_-8px_rgba(63,201,180,0.55)]"
+      />
       <span className="text-[17px] font-semibold tracking-[0.22em] text-white">
         CODLINX
       </span>

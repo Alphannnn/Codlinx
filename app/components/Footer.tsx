@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const ACCENT = "#3FC9B4";
 
@@ -128,25 +129,13 @@ function Brand() {
         aria-label="Codlinx home"
         className="inline-flex items-center gap-2.5 self-start outline-none focus-visible:ring-2 focus-visible:ring-[#3FC9B4]/60"
       >
-        <span
-          className="grid h-10 w-10 place-items-center rounded-xl shadow-[0_8px_24px_-8px_rgba(63,201,180,0.5)]"
-          style={{ backgroundColor: ACCENT }}
-          aria-hidden
-        >
-          <svg
-            viewBox="0 0 32 32"
-            className="h-5 w-5"
-            fill="none"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M22 8H12a4 4 0 0 0-4 4v12" />
-            <path d="M8 16h9" />
-            <path d="M8 24c4-1 7-3 9-6" />
-          </svg>
-        </span>
+        <Image
+          src="/codlinx-icon.png"
+          alt="Codlinx"
+          width={40}
+          height={40}
+          className="h-10 w-10 rounded-xl shadow-[0_8px_24px_-8px_rgba(63,201,180,0.5)]"
+        />
         <span className="text-[17px] font-semibold tracking-[0.22em]">CODLINX</span>
       </Link>
 

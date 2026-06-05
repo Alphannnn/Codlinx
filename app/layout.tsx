@@ -58,9 +58,6 @@ export const metadata: Metadata = {
     description:
       "Design, engineering, AI, and infrastructure under one roof. 120+ products shipped.",
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
   robots: {
     index: true,
     follow: true,

@@ -33,75 +33,12 @@ export type Project = {
   duration: string;
   team: string;
   location: string;
+  previewImage?: string;
 };
 
 type Seed = Omit<Project, "visual"> & { swatch: string; hue: string };
 
 const SEEDS: Seed[] = [
-  {
-    slug: "flote",
-    client: "Flote",
-    industry: "Marketing Automation",
-    year: "2024",
-    url: "https://flotelab.com/",
-    title: "A workflow engine for modern marketing teams.",
-    blurb:
-      "Full-stack delivery on Flote Lab — a marketing automation platform that turns multi-channel campaigns into a single, observable workflow.",
-    summary:
-      "We led full-stack development on Flote, building campaign workflows, integrations, and the dashboards marketers actually open every morning. Cross-functional collaboration shaped the product from API contracts to UI states.",
-    metric: { value: "Live", label: "In production" },
-    tags: ["Next.js", "Node.js", "Postgres", "Automation"],
-    hue: "rgba(139,92,246,0.22)",
-    swatch: "#8B5CF6",
-    heroImage:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=80",
-    heroAlt: "Marketing analytics dashboards on a wide monitor",
-    gallery: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-        alt: "Campaign analytics dashboard on a laptop",
-        caption: "Campaign analytics surfaced in one operational view",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=80",
-        alt: "Marketing team reviewing automation workflows",
-        caption: "Automation workflows replacing spreadsheets and ad-hoc scripts",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80",
-        alt: "Strategy session at a workshop table",
-        caption: "Strategy synced weekly with the in-house product team",
-      },
-    ],
-    testimonial: {
-      quote:
-        "We led full-stack delivery on Flote, partnering with product, design, and growth to ship integrations, workflow primitives, and reporting that marketers rely on day-to-day.",
-      name: "Codlinx Engineering",
-      role: "Engagement note · Flote",
-      avatar:
-        "https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=240&q=80",
-    },
-    challenge:
-      "Flote needed to translate scattered marketing tactics into repeatable automated workflows — without sacrificing the flexibility growth teams expect.",
-    approach: [
-      "Mapped the marketing workflow surface end-to-end with the product team.",
-      "Built core automation primitives and event-driven triggers in Node.",
-      "Shipped a Next.js dashboard with campaign analytics and audit history.",
-      "Wired third-party integrations behind a unified connector layer.",
-    ],
-    outcome: [
-      { value: "Live", label: "Shipped to production" },
-      { value: "Full-stack", label: "Delivery scope" },
-      { value: "2024", label: "Engagement year" },
-    ],
-    services: ["Web", "Cloud", "Strategy"],
-    duration: "Multi-quarter",
-    team: "Full-stack pod",
-    location: "Remote",
-  },
   {
     slug: "traded",
     client: "Traded",
@@ -172,6 +109,7 @@ const SEEDS: Seed[] = [
     industry: "Marketing Automation",
     year: "2022",
     url: "https://www.zentap.com/",
+    previewImage: "/projects/zentap.jpeg",
     title: "Leading delivery on a real-estate marketing engine.",
     blurb:
       "Pivotal development role on Zentap — a marketing automation platform built for real-estate agents who want growth without the busywork.",
@@ -295,75 +233,12 @@ const SEEDS: Seed[] = [
     location: "Remote",
   },
   {
-    slug: "go-outfitter",
-    client: "Go Outfitter",
-    industry: "Commerce",
-    year: "2023",
-    url: "https://www.gooutfitter.com/",
-    title: "A marketplace built for serious outdoor buyers.",
-    blurb:
-      "Full-stack development on Go Outfitter — an online marketplace with intuitive navigation, secure payments, and the polish outdoor shoppers expect.",
-    summary:
-      "We contributed across the stack on Go Outfitter, shaping the buyer journey, hardening payments, and shipping the merchandising surfaces that make discovery feel effortless.",
-    metric: { value: "Live", label: "In production" },
-    tags: ["E-commerce", "Payments", "React", "Node.js"],
-    hue: "rgba(46,184,114,0.22)",
-    swatch: "#2EB872",
-    heroImage:
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1800&q=80",
-    heroAlt: "Outdoor gear laid out on a wooden table",
-    gallery: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=80",
-        alt: "Hiker overlooking a valley",
-        caption: "Designed for the audience, not the algorithm",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1455156218388-5e61b526818b?auto=format&fit=crop&w=1200&q=80",
-        alt: "Outdoor gear arranged for product photography",
-        caption: "Merchandising surfaces tuned for browse-to-buy",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80",
-        alt: "Mountain trail with adventurer",
-        caption: "Trust and secure payments at the heart of checkout",
-      },
-    ],
-    testimonial: {
-      quote:
-        "On Go Outfitter we contributed full-stack — pairing software engineering depth with a focus on user-friendly navigation and a checkout shoppers actually trust.",
-      name: "Codlinx Engineering",
-      role: "Engagement note · Go Outfitter",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=240&q=80",
-    },
-    challenge:
-      "Go Outfitter needed an online marketplace where outdoor shoppers could find gear without friction and check out with confidence.",
-    approach: [
-      "Designed buyer journeys aligned to real outdoor purchasing intent.",
-      "Built reusable storefront primitives and product surfaces.",
-      "Implemented secure payment flows with end-to-end validation.",
-      "Tuned performance for browse-heavy sessions on mobile.",
-    ],
-    outcome: [
-      { value: "Live", label: "Shipped to production" },
-      { value: "Full-stack", label: "Delivery scope" },
-      { value: "2023", label: "Engagement year" },
-    ],
-    services: ["Web", "Design"],
-    duration: "Multi-month",
-    team: "Full-stack pod",
-    location: "Remote",
-  },
-  {
     slug: "event-staffing",
     client: "Event Staffing",
     industry: "Events",
     year: "2022",
     url: "https://eventstaffing.co.uk/",
+    previewImage: "/projects/event-staffing.jpeg",
     title: "Connecting organisers with the people who make events happen.",
     blurb:
       "Member of the build team for Event Staffing — designing intuitive interfaces and the backend that powers organiser-to-staff coordination.",
@@ -422,134 +297,6 @@ const SEEDS: Seed[] = [
     team: "Build team",
     location: "Remote",
   },
-  {
-    slug: "cancelo",
-    client: "Cancelo",
-    industry: "SaaS",
-    year: "2023",
-    url: "https://cancelo.io/",
-    title: "Subscription management without the friction.",
-    blurb:
-      "Member of the Cancelo build team — engineering the backend and interfaces that let users see, edit, and stop subscriptions on their terms.",
-    summary:
-      "We worked on Cancelo as part of the delivery team, building efficient backend services and intuitive UIs that turn subscription chaos into something users actually control.",
-    metric: { value: "Live", label: "In production" },
-    tags: ["SaaS", "Payments", "TypeScript", "Subscriptions"],
-    hue: "rgba(217,119,87,0.22)",
-    swatch: "#D97757",
-    heroImage:
-      "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1800&q=80",
-    heroAlt: "Mobile app showing subscriptions and recurring charges",
-    gallery: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1200&q=80",
-        alt: "Subscription dashboard on a phone",
-        caption: "All recurring charges in one accountable view",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
-        alt: "Analytics dashboard showing spend over time",
-        caption: "User-friendly visibility into spend patterns",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80",
-        alt: "Paper bills and receipts beside a laptop",
-        caption: "Cancellation flows that respect the user, not the merchant",
-      },
-    ],
-    testimonial: {
-      quote:
-        "On Cancelo we played a key engineering role — shipping efficient backend systems and intuitive interfaces so users can manage and stop subscriptions without the dark-pattern detour.",
-      name: "Codlinx Engineering",
-      role: "Engagement note · Cancelo",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&q=80",
-    },
-    challenge:
-      "Cancelo's customers needed an honest, fast way to see and cancel subscriptions — without the dark patterns that protect the merchant over the user.",
-    approach: [
-      "Built efficient backend services for subscription state and payments.",
-      "Designed UIs that surface charges and cancellations clearly.",
-      "Implemented secure integrations across multiple payment providers.",
-      "Tuned the experience for trust and speed at the moment that matters.",
-    ],
-    outcome: [
-      { value: "Live", label: "Shipped to production" },
-      { value: "Build team", label: "Engagement role" },
-      { value: "2023", label: "Engagement year" },
-    ],
-    services: ["Web", "Cloud"],
-    duration: "Multi-month",
-    team: "Build team",
-    location: "Remote",
-  },
-  {
-    slug: "assemble",
-    client: "Assemble",
-    industry: "Collaboration",
-    year: "2023",
-    url: "https://assemble.fyi/",
-    title: "A workspace built for the way remote teams actually work.",
-    blurb:
-      "Member of the Assemble build team — shipping intuitive interfaces and seamless communication features for remote-first collaboration.",
-    summary:
-      "We contributed to Assemble's build team, shaping a collaborative workspace tailored to remote teams. Software engineering depth applied to UI craft and the real-time plumbing that makes collaboration feel close.",
-    metric: { value: "Live", label: "In production" },
-    tags: ["Collaboration", "Realtime", "TypeScript", "React"],
-    hue: "rgba(34,211,238,0.22)",
-    swatch: "#22D3EE",
-    heroImage:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1800&q=80",
-    heroAlt: "Distributed team collaborating across video and chat",
-    gallery: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
-        alt: "Remote team meeting on a laptop",
-        caption: "Real-time collaboration that respects distance",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
-        alt: "Team brainstorming with sticky notes",
-        caption: "Async + sync flows for how teams actually work",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80",
-        alt: "Engineer working from a home office",
-        caption: "Built for remote-first teams from the ground up",
-      },
-    ],
-    testimonial: {
-      quote:
-        "We helped build Assemble — applying software engineering craft to intuitive UI and the seamless communication features that make distributed collaboration feel close.",
-      name: "Codlinx Engineering",
-      role: "Engagement note · Assemble",
-      avatar:
-        "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=240&q=80",
-    },
-    challenge:
-      "Assemble's audience expected the polish of a co-located workspace inside a remote-first product — without the latency or seams of bolted-on tools.",
-    approach: [
-      "Built intuitive interfaces for shared and individual workspaces.",
-      "Implemented seamless real-time communication features.",
-      "Shaped collaboration flows around remote-team rituals.",
-      "Hardened the platform with type-safety and performance budgets.",
-    ],
-    outcome: [
-      { value: "Live", label: "Shipped to production" },
-      { value: "Build team", label: "Engagement role" },
-      { value: "2023", label: "Engagement year" },
-    ],
-    services: ["Web", "Design"],
-    duration: "Multi-month",
-    team: "Build team",
-    location: "Remote",
-  },
 ];
 
 export const PROJECTS: Project[] = SEEDS.map((s) => ({
@@ -560,6 +307,7 @@ export const PROJECTS: Project[] = SEEDS.map((s) => ({
       swatch={s.swatch}
       hue={s.hue}
       label={s.client}
+      previewImage={s.previewImage}
     />
   ),
 }));

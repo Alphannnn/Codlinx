@@ -18,12 +18,8 @@ const METRICS = [
 ];
 
 const CLIENT_LOGOS = [
-  "Flote",
   "Traded",
   "Zentap",
-  "Go Outfitter",
-  "Cancelo",
-  "Assemble",
 ];
 
 export default function Hero() {

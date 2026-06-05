@@ -108,14 +108,10 @@ export default function WorkPage() {
 
 function KineticBrandStrip() {
   const logos = [
-    "Flote",
     "Traded",
     "Zentap",
     "Upcoming Events",
-    "Go Outfitter",
     "Event Staffing",
-    "Cancelo",
-    "Assemble",
   ];
   return (
     <section className="relative isolate overflow-hidden border-y border-zinc-900/[0.06] bg-[#FAFAF7] py-10">

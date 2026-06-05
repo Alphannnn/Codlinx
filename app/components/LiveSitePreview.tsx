@@ -7,9 +7,16 @@ type Props = {
   swatch: string;
   hue: string;
   label?: string;
+  previewImage?: string;
 };
 
-export default function LiveSitePreview({ url, swatch, hue, label }: Props) {
+export default function LiveSitePreview({
+  url,
+  swatch,
+  hue,
+  label,
+  previewImage,
+}: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -95,6 +102,16 @@ export default function LiveSitePreview({ url, swatch, hue, label }: Props) {
           </div>
 
           <div className="relative h-[calc(100%-30px)] bg-white">
+            {previewImage ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={previewImage}
+                alt={`${label || domain} website preview`}
+                loading="lazy"
+                className="absolute left-0 top-0 h-full w-full object-cover object-top"
+              />
+            ) : (
+              <>
             {shouldLoad && !failed && (
               <iframe
                 src={url}
@@ -138,6 +155,8 @@ export default function LiveSitePreview({ url, swatch, hue, label }: Props) {
                 <div className="text-xs text-white/45">{domain}</div>
               </div>
             </div>
+              </>
+            )}
           </div>
         </div>
       </div>

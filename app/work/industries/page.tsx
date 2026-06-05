@@ -56,8 +56,6 @@ const INDUSTRIES: (IndustryItem & { swatch?: string })[] = [
       "Prompt caching + model routing",
       "Eval harnesses + red-team pipelines",
     ],
-    caseStudySlug: "assemble",
-    caseStudyLabel: "See Assemble case study",
   },
   {
     slug: "iot",
@@ -70,8 +68,6 @@ const INDUSTRIES: (IndustryItem & { swatch?: string })[] = [
       "Multi-region failover playbooks",
       "Operator dashboards with role-based runbooks",
     ],
-    caseStudySlug: "cancelo",
-    caseStudyLabel: "See Cancelo case study",
   },
   {
     slug: "saas",
@@ -120,8 +116,6 @@ const INDUSTRIES: (IndustryItem & { swatch?: string })[] = [
       "Sub-second LCP on PDPs",
       "Subscription billing & retention loops",
     ],
-    caseStudySlug: "go-outfitter",
-    caseStudyLabel: "See Go Outfitter case study",
   },
   {
     slug: "media",

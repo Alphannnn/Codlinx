@@ -42,7 +42,7 @@ const NAV_ITEMS: NavItem[] = [
         description: "AWS, GCP, CI/CD pipelines, and SRE.",
       },
       {
-        label: "AI & ML",
+        label: "AI & Machine Learning",
         href: "/services/ai",
         description: "LLM integrations, RAG, and ML pipelines.",
       },
@@ -55,6 +55,26 @@ const NAV_ITEMS: NavItem[] = [
         label: "Product Strategy",
         href: "/services/strategy",
         description: "Discovery, roadmaps, and go-to-market.",
+      },
+      {
+        label: "Graphic Design",
+        href: "/services/graphic-design",
+        description: "Brand visuals that stop the scroll.",
+      },
+      {
+        label: "SEO",
+        href: "/services/seo",
+        description: "Rank for the searches that actually convert.",
+      },
+      {
+        label: "Social Media Management",
+        href: "/services/social-media",
+        description: "Channels run end to end, on brand.",
+      },
+      {
+        label: "Social Media Marketing",
+        href: "/services/social-media-marketing",
+        description: "Paid social that turns reach into revenue.",
       },
     ],
   },

@@ -6,7 +6,7 @@ import PageHero from "../components/PageHero";
 
 const ACCENT = "#3FC9B4";
 
-const BUDGETS = ["< $25K", "$25K–$75K", "$75K–$200K", "$200K+", "Not sure"];
+const BUDGETS = ["< $5K", "$25K–$75K", "$75K–$200K", "$200K+", "Not sure"];
 const SERVICES = [
   "Web app",
   "Mobile app",
@@ -15,7 +15,7 @@ const SERVICES = [
   "UI / UX",
   "Strategy",
 ];
-const TIMELINES = ["Yesterday", "1–3 months", "3–6 months", "6+ months"];
+const TIMELINES = ["1–2 weeks", "1–3 months", "3–6 months", "6+ months"];
 const MAX_BRIEF = 1500;
 
 type Status = "idle" | "sending" | "sent" | "error";

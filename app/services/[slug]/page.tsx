@@ -35,6 +35,7 @@ type ServiceMedia = {
     role: string;
     avatar: string;
   };
+  reviews?: { quote: string; name: string; role: string; avatar: string }[];
   signals: string[];
 };
 
@@ -93,6 +94,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "They rebuilt our checkout in six weeks and our Core Web Vitals went all green. Conversion followed within a month.",
+        name: "Liam Foster",
+        role: "CTO, Brightwave Commerce",
+        avatar:
+          "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "The codebase they handed over is the cleanest we've inherited. Onboarding a new engineer takes a day, not a fortnight.",
+        name: "Sofia Marin",
+        role: "Engineering Manager, Northwind",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Core Web Vitals tracked from PR #1",
       "TypeScript strict, ESLint, Playwright on every repo",
@@ -154,6 +173,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "One React Native codebase, both stores, zero compromises. Our App Store rating climbed from 3.6 to 4.7 after the rewrite.",
+        name: "Kenji Tanaka",
+        role: "Product Lead, Wander",
+        avatar:
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "They shipped to TestFlight in week two and never missed a sprint after. That kind of mobile predictability is rare.",
+        name: "Rachel Adeyemi",
+        role: "VP Product, Finlee",
+        avatar:
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Native iOS (Swift / SwiftUI) and Android (Kotlin / Compose)",
       "OTA updates via EAS / CodePush — fix a bug in hours, not weeks",
@@ -215,6 +252,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "Our deploys went from a scary Friday ritual to a non-event. Blue-green, rollbacks, the works — set up right the first time.",
+        name: "Marco Bianchi",
+        role: "Head of Infrastructure, Quanta",
+        avatar:
+          "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "Uptime hit four nines the quarter after they tuned our autoscaling. The on-call pager basically went quiet.",
+        name: "Priyanka Rao",
+        role: "SRE Lead, Stackhouse",
+        avatar:
+          "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Terraform / Pulumi from day one — no click-ops drift",
       "Datadog + OpenTelemetry traces, logs, and metrics",
@@ -276,6 +331,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "We had a demo that wowed the room and broke in production. Codlinx gave us the eval harness that made it actually shippable.",
+        name: "Jonas Weber",
+        role: "Head of ML, Cortex Labs",
+        avatar:
+          "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "RAG that cites its sources and a cost dashboard from day one. Our legal team signed off without a single redline.",
+        name: "Amelia Stone",
+        role: "Director of AI, Meridian",
+        avatar:
+          "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Eval-gated deploys — no prompt change ships without a score",
       "Citation contracts: every claim links to a source",
@@ -337,6 +410,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "Their design system cut our handoff friction to nothing. Designers and engineers finally speak the same language.",
+        name: "Noah Schmidt",
+        role: "Head of Design, Cobalt",
+        avatar:
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "Every screen they touched tested better. Task completion was up 24% in the first usability round.",
+        name: "Yuki Mori",
+        role: "UX Lead, Lumen Retail",
+        avatar:
+          "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Design system lives in Figma and your repo, with shared review",
       "WCAG 2.2 AA is the floor, not the postscript",
@@ -398,6 +489,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "They told us what not to build, and that saved us a quarter. The roadmap finally matched what engineering could actually ship.",
+        name: "Grace Liu",
+        role: "COO, Helios Energy",
+        avatar:
+          "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "Our go-to-market was guesswork before. Now every bet has a number behind it and a clear point at which we kill it.",
+        name: "Tomás Herrera",
+        role: "Founder, Vela",
+        avatar:
+          "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Stakeholder + user interviews, written up the same day",
       "Engineering-validated estimates — we won't promise what we can't ship",
@@ -459,6 +568,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "The brand kit they built runs our entire content pipeline. Net-new creative in minutes, always on-brand.",
+        name: "Bella Knight",
+        role: "Brand Manager, Halcyon Pay",
+        avatar:
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "Editable source files, real templates, proper documentation. We stopped re-hiring an agency for every campaign.",
+        name: "Omar Faruk",
+        role: "Marketing Director, Vega Mobility",
+        avatar:
+          "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Editable source files handed over with every project",
       "Token-driven systems, not one-off graphics",
@@ -520,6 +647,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "Six months in, we rank page one for the terms that actually close. Codlinx treats SEO like a system, not a trick.",
+        name: "Hannah Berg",
+        role: "Growth Lead, Stackhouse",
+        avatar:
+          "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "They fixed the technical debt no one else would touch. Crawl errors gone, rankings climbed, pipeline followed.",
+        name: "Ravi Menon",
+        role: "CMO, Brightwave",
+        avatar:
+          "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Technical audit and Core Web Vitals fixed first",
       "Keywords mapped to intent, not vanity volume",
@@ -581,6 +726,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "Our feed finally looks like us and grows every single month. We barely lift a finger.",
+        name: "Chloé Dubois",
+        role: "Founder, Atelier Nord",
+        avatar:
+          "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "Community engagement tripled in a quarter. They reply in our voice better than we do.",
+        name: "Dev Patel",
+        role: "Head of Brand, Finlee",
+        avatar:
+          "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Monthly calendar approved before anything goes live",
       "On-brand creative for every post and story",
@@ -642,6 +805,24 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&q=80",
     },
+    reviews: [
+      {
+        quote:
+          "Scaled spend 3× and the cost per lead actually dropped. The creative testing cadence is relentless and it shows.",
+        name: "Isabella Romano",
+        role: "Performance Lead, Quanta",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80",
+      },
+      {
+        quote:
+          "Clean tracking, sharp creative, honest reporting. The first agency that optimized for our pipeline, not their invoice.",
+        name: "Samuel Osei",
+        role: "VP Marketing, Meridian",
+        avatar:
+          "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=crop&w=240&q=80",
+      },
+    ],
     signals: [
       "Conversion tracking wired up before launch",
       "Structured testing across audiences and creative",
@@ -1387,6 +1568,35 @@ function ServiceTestimonial({ media }: { media: ServiceMedia }) {
             </figcaption>
           </Tilt>
         </Reveal>
+
+        {media.reviews && media.reviews.length > 0 && (
+          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {media.reviews.map((r) => (
+              <Reveal key={r.name}>
+                <figure className="flex h-full flex-col gap-4 rounded-2xl border border-zinc-900/[0.06] bg-white p-6 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.25)]">
+                  <blockquote className="text-[15px] leading-relaxed text-zinc-700">
+                    &ldquo;{r.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-auto flex items-center gap-3">
+                    <Image
+                      src={r.avatar}
+                      alt={r.name}
+                      width={40}
+                      height={40}
+                      className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-zinc-900/10"
+                    />
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-semibold text-zinc-900">
+                        {r.name}
+                      </div>
+                      <div className="truncate text-xs text-zinc-500">{r.role}</div>
+                    </div>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

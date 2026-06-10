@@ -8,12 +8,16 @@ const ACCENT = "#3FC9B4";
 
 const BUDGETS = ["< $5K", "$25K–$75K", "$75K–$200K", "$200K+", "Not sure"];
 const SERVICES = [
-  "Web app",
-  "Mobile app",
-  "AI / ML",
-  "Cloud / DevOps",
-  "UI / UX",
-  "Strategy",
+  "Web Development",
+  "Mobile Apps",
+  "Cloud & DevOps",
+  "AI & Machine Learning",
+  "UI / UX Design",
+  "Product Strategy",
+  "Graphic Design",
+  "SEO",
+  "Social Media Management",
+  "Social Media Marketing",
 ];
 const TIMELINES = ["1–2 weeks", "1–3 months", "3–6 months", "6+ months"];
 const MAX_BRIEF = 1500;
@@ -262,12 +266,6 @@ export default function ContactForm() {
               body="For projects, press, or partnerships."
               href="mailto:info@codlinx.com"
               icon={<MailIcon />}
-            />
-            <SideCard
-              eyebrow="Studios"
-              title="London · Lahore · Remote"
-              body="Senior team across UK and APAC time zones."
-              icon={<GlobeIcon />}
             />
             <SideCard
               eyebrow="Office"
@@ -777,14 +775,6 @@ function MailIcon() {
     <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <rect x="2.5" y="4.5" width="15" height="11" rx="2" />
       <path d="M3 6l7 5 7-5" />
-    </svg>
-  );
-}
-function GlobeIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="10" cy="10" r="7.5" />
-      <path d="M2.5 10h15M10 2.5c2.5 3 2.5 12 0 15M10 2.5c-2.5 3-2.5 12 0 15" />
     </svg>
   );
 }

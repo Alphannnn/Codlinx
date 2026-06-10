@@ -6,7 +6,7 @@ import PageHero from "../components/PageHero";
 
 const ACCENT = "#3FC9B4";
 
-const BUDGETS = ["< $5K", "$25K–$75K", "$75K–$200K", "$200K+", "Not sure"];
+const BUDGETS = ["< $5K", "$5K–$10K", "$10K–$20K", "$20K+", "Not sure"];
 const SERVICES = [
   "Web Development",
   "Mobile Apps",

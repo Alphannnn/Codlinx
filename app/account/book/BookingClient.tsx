@@ -16,7 +16,7 @@ const SERVICES = [
   "UI / UX",
   "Strategy",
 ];
-const BUDGETS = ["< $25K", "$25K–$75K", "$75K–$200K", "$200K+", "Not sure"];
+const BUDGETS = ["< $5K", "$5K–$10K", "$10K–$20K", "$20K+", "Not sure"];
 const TIMELINES = ["Yesterday", "1–3 months", "3–6 months", "6+ months"];
 
 type Step = "slot" | "brief" | "review" | "done";

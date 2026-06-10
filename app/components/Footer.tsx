@@ -168,7 +168,6 @@ function Brand() {
             </a>
           }
         />
-        <MetaLine label="Studios" value="London · Lahore · Remote" />
         <MetaLine
           label="Office"
           value={

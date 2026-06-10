@@ -285,7 +285,7 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
   },
   design: {
     heroImage:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b8?auto=format&fit=crop&w=1800&q=80",
+      "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1800&q=80",
     heroAlt: "Designer sketching interface flows on paper next to a laptop",
     heroBadge: "Brand · Product · Motion",
     liveLine: "Currently shipping a design system for Lumen Retail",
@@ -432,7 +432,7 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
       },
       {
         image:
-          "https://images.unsplash.com/photo-1626785774625-0b1c2c4eab67?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1502691876148-a84978e59af8?auto=format&fit=crop&w=1200&q=80",
         alt: "Color palette and typography specimen sheet",
         caption: "Tokens, type, and color — documented, not improvised",
       },
@@ -468,7 +468,7 @@ const SERVICE_MEDIA: Record<string, ServiceMedia> = {
   },
   seo: {
     heroImage:
-      "https://images.unsplash.com/photo-1571677208775-dc0c2fa8c1c1?auto=format&fit=crop&w=1800&q=80",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=80",
     heroAlt: "Analytics dashboard showing organic search growth",
     heroBadge: "Technical · Content · Authority",
     liveLine: "Currently growing organic pipeline for Halcyon Pay",

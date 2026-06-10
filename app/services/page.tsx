@@ -54,7 +54,7 @@ const SERVICE_VISUALS: Record<
   },
   design: {
     image:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b8?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1600&q=80",
     alt: "Designer sketching interface flows on paper",
     accent: "Brand · Product · Motion",
     outcome: "Design systems shipped to your Figma and your repo",
@@ -75,7 +75,7 @@ const SERVICE_VISUALS: Record<
   },
   seo: {
     image:
-      "https://images.unsplash.com/photo-1571677208775-dc0c2fa8c1c1?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
     alt: "Analytics dashboard showing search traffic growth",
     accent: "Technical · Content · Authority",
     outcome: "Traffic that compounds into qualified pipeline",

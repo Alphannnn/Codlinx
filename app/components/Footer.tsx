@@ -36,7 +36,7 @@ const COLUMNS = [
 const SOCIAL = [
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/company/codlinx00/",
+    href: "https://www.linkedin.com/company/codlinx00/posts/?feedView=all",
     icon: <LinkedInIcon />,
   },
   {

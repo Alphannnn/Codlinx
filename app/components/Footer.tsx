@@ -28,7 +28,6 @@ const COLUMNS = [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
       { label: "Security", href: "/security" },
-      { label: "Status", href: "https://status.codlinx.com" },
     ],
   },
 ];

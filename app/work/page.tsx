@@ -184,6 +184,8 @@ function FeaturedSpotlight({ project }: { project: Project }) {
             </div>
             <Link
               href={`/work/${project.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 text-sm font-semibold text-zinc-900"
             >
               <span className="relative">
@@ -213,6 +215,8 @@ function FeaturedSpotlight({ project }: { project: Project }) {
         <Reveal delay={100}>
           <Link
             href={`/work/${project.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group mt-12 grid grid-cols-1 overflow-hidden rounded-3xl border border-zinc-900/[0.06] bg-white shadow-[0_28px_80px_-40px_rgba(0,0,0,0.3)] transition-all duration-500 hover:shadow-[0_44px_100px_-40px_rgba(0,0,0,0.42)] lg:grid-cols-[1.1fr_1fr]"
           >
             <div className="relative h-[300px] overflow-hidden bg-zinc-950 sm:h-[460px] lg:h-auto">

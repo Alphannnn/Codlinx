@@ -633,6 +633,8 @@ function PrevNext({ prev, next }: { prev: Project; next: Project }) {
           <Reveal direction="left">
             <Link
               href={`/work/${prev.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative flex h-full items-center justify-between gap-6 overflow-hidden rounded-2xl border border-zinc-900/[0.06] bg-[#FAFAF7] p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-900/15 hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.22)]"
             >
               <div
@@ -677,6 +679,8 @@ function PrevNext({ prev, next }: { prev: Project; next: Project }) {
           <Reveal direction="right">
             <Link
               href={`/work/${next.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative flex h-full items-center justify-between gap-6 overflow-hidden rounded-2xl border border-zinc-900/[0.06] bg-[#FAFAF7] p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-900/15 hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.22)]"
             >
               <div
@@ -778,6 +782,8 @@ function RelatedWork({ related }: { related: Project[] }) {
               <Tilt max={4} scale={1.01} glare={false} className="h-full">
                 <Link
                   href={`/work/${p.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-900/[0.06] bg-white shadow-[0_18px_40px_-26px_rgba(0,0,0,0.2)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_60px_-26px_rgba(0,0,0,0.32)]"
                 >
                   <div className="relative h-48 overflow-hidden">

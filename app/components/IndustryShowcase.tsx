@@ -133,6 +133,8 @@ export default function IndustryShowcase({
           {current.caseStudySlug && (
             <Link
               href={`/work/${current.caseStudySlug}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group mt-8 inline-flex h-11 items-center gap-2 rounded-full bg-zinc-900 px-5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
             >
               {current.caseStudyLabel ?? `See ${current.name} case study`}

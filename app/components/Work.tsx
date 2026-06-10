@@ -303,6 +303,8 @@ function ProjectCard({
             </div>
             <Link
               href={`/work/${project.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-1.5 text-sm font-semibold text-white"
             >
               Read case study

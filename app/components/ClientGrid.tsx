@@ -144,7 +144,7 @@ export default function ClientGrid({ clients }: { clients: ClientRow[] }) {
             <Reveal key={c.name} delay={(i % 8) * 40}>
               <li>
                 {c.featured && c.slug ? (
-                  <Link href={`/work/${c.slug}`} className="block h-full">
+                  <Link href={`/work/${c.slug}`} target="_blank" rel="noopener noreferrer" className="block h-full">
                     {inner}
                   </Link>
                 ) : (

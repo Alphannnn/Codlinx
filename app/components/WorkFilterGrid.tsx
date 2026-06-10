@@ -244,6 +244,8 @@ export default function WorkFilterGrid({
               <Tilt max={4} scale={1.01} glare={false} className="h-full">
                 <Link
                   href={`/work/${p.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex h-full flex-col overflow-hidden rounded-3xl border border-zinc-900/[0.06] bg-white shadow-[0_18px_50px_-30px_rgba(0,0,0,0.2)] transition-all duration-500 hover:shadow-[0_28px_70px_-24px_rgba(0,0,0,0.28)]"
                 >
                   <div className="relative h-[260px] overflow-hidden">
@@ -338,6 +340,8 @@ export default function WorkFilterGrid({
             <Reveal key={p.slug} delay={idx * 60}>
               <Link
                 href={`/work/${p.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group grid grid-cols-[120px_1fr_auto] items-center gap-6 rounded-2xl border border-zinc-900/[0.06] bg-white p-3 pr-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-900/15 hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.25)] sm:grid-cols-[160px_1fr_auto]"
               >
                 <div className="relative h-20 overflow-hidden rounded-xl sm:h-24">

@@ -139,16 +139,15 @@ function Brand() {
       <Link
         href="/"
         aria-label="Codlinx home"
-        className="inline-flex items-center gap-2.5 self-start outline-none focus-visible:ring-2 focus-visible:ring-[#3FC9B4]/60"
+        className="inline-flex items-center self-start outline-none focus-visible:ring-2 focus-visible:ring-[#3FC9B4]/60"
       >
         <Image
-          src="/codlinx-icon.png"
+          src="/codlinx-logo.png"
           alt="Codlinx"
-          width={40}
-          height={40}
-          className="h-10 w-10 rounded-xl shadow-[0_8px_24px_-8px_rgba(63,201,180,0.5)]"
+          width={1100}
+          height={256}
+          className="h-9 w-auto"
         />
-        <span className="text-[17px] font-semibold tracking-[0.22em]">CODLINX</span>
       </Link>
 
       <p className="max-w-xs text-[15px] leading-relaxed text-white/55">

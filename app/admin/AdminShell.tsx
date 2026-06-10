@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -109,17 +110,16 @@ export default function AdminShell({
           </button>
 
           <Link href="/admin" className="flex items-center gap-2.5">
-            <span
-              className="grid h-7 w-7 place-items-center rounded-lg text-[11px] font-bold text-black"
-              style={{ backgroundColor: ACCENT }}
-            >
-              C
-            </span>
-            <span className="hidden text-sm font-semibold tracking-tight sm:flex sm:items-center sm:gap-2">
-              Codlinx
-              <span className="rounded-md bg-white/[0.06] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/55">
-                Admin
-              </span>
+            <Image
+              src="/codlinx-logo.png"
+              alt="Codlinx"
+              width={1100}
+              height={256}
+              priority
+              className="h-6 w-auto"
+            />
+            <span className="hidden rounded-md bg-white/[0.06] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/55 sm:inline-block">
+              Admin
             </span>
           </Link>
 

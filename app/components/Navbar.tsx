@@ -107,18 +107,15 @@ const ACCENT = "#3FC9B4";
 
 function CodlinxMark({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
+    <span className={`inline-flex items-center ${className}`}>
       <Image
-        src="/codlinx-icon.png"
+        src="/codlinx-logo.png"
         alt="Codlinx"
-        width={36}
-        height={36}
+        width={1100}
+        height={256}
         priority
-        className="h-9 w-9 rounded-xl shadow-[0_8px_24px_-8px_rgba(63,201,180,0.55)]"
+        className="h-8 w-auto"
       />
-      <span className="text-[17px] font-semibold tracking-[0.22em] text-white">
-        CODLINX
-      </span>
     </span>
   );
 }

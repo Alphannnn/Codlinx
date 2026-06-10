@@ -3,6 +3,7 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from "react";
 import Link from "next/link";
 import PageHero from "../components/PageHero";
+import { sendContactBrief } from "../lib/actions/contact";
 
 const ACCENT = "#3FC9B4";
 
@@ -35,6 +36,7 @@ export default function ContactForm() {
   const [budget, setBudget] = useState<string>("");
   const [timeline, setTimeline] = useState<string>("");
   const [consent, setConsent] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const toggleService = (s: string) =>
     setSelectedServices((prev) =>
@@ -55,9 +57,24 @@ export default function ContactForm() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!consent || status === "sending") return;
+    setErrorMsg("");
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 900));
-    setStatus("sent");
+    const res = await sendContactBrief({
+      name,
+      email,
+      company,
+      role,
+      brief,
+      services: selectedServices,
+      budget,
+      timeline,
+    });
+    if (res.ok) {
+      setStatus("sent");
+    } else {
+      setErrorMsg(res.error);
+      setStatus("error");
+    }
   };
 
   return (
@@ -209,6 +226,19 @@ export default function ContactForm() {
                       and consent to being contacted about my enquiry.
                     </span>
                   </label>
+
+                  {status === "error" && errorMsg && (
+                    <div
+                      role="alert"
+                      className="mt-6 flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+                    >
+                      <svg viewBox="0 0 16 16" className="mt-0.5 h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <circle cx="8" cy="8" r="6.5" />
+                        <path d="M8 5v3.5M8 11h.01" />
+                      </svg>
+                      <span>{errorMsg}</span>
+                    </div>
+                  )}
 
                   <div className="mt-8 flex flex-col-reverse items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-xs text-zinc-500">

@@ -161,11 +161,22 @@ export default function LiveSitePreview({
         </div>
       </div>
 
+      {/* Full-area click target so tapping anywhere on the preview opens the
+          live site in a new tab — not just the pill below. */}
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="codlinx-preview-cta absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md transition-all duration-300 hover:border-white/35 hover:bg-black/90"
+        aria-label={`Open ${label || domain} live site in a new tab`}
+        className="absolute inset-0 z-[1]"
+        onClick={(e) => e.stopPropagation()}
+      />
+
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="codlinx-preview-cta absolute bottom-4 right-4 z-[2] inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md transition-all duration-300 hover:border-white/35 hover:bg-black/90"
         onClick={(e) => e.stopPropagation()}
       >
         <span

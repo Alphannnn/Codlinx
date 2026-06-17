@@ -45,6 +45,7 @@ const SEEDS: Seed[] = [
     industry: "Fintech",
     year: "2023",
     url: "https://traded.co/",
+    previewImage: "/projects/traded.jpeg",
     title: "Streamlining the trade, end to end.",
     blurb:
       "Backend and frontend delivery on Traded — a platform that pulls fragmented trading workflows into a clean, investor-friendly experience.",
@@ -174,6 +175,7 @@ const SEEDS: Seed[] = [
     industry: "Events",
     year: "2022",
     url: "https://www.upcomingevents.com/philadelphia",
+    previewImage: "/projects/upcoming-events.jpeg",
     title: "End-to-end ownership of an event staffing platform.",
     blurb:
       "Led the build for Upcoming Events — agile delivery from requirements through deployment for a regional event discovery and staffing site.",

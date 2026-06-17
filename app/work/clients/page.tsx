@@ -17,11 +17,11 @@ export const metadata = {
 
 const CLIENTS: ClientRow[] = [
   { name: "Northwind", sector: "SaaS", since: "2024" },
-  { name: "Lumen Labs", sector: "AI", since: "2024", featured: true, slug: "lumen-labs" },
-  { name: "Helios Energy", sector: "IoT", since: "2023", featured: true, slug: "helios-energy" },
-  { name: "Atlas Trade", sector: "Fintech", since: "2024", featured: true, slug: "atlas-trade" },
+  { name: "Traded", sector: "Fintech", since: "2024", featured: true, slug: "traded" },
+  { name: "Zentap", sector: "PropTech", since: "2023", featured: true, slug: "zentap" },
+  { name: "Upcoming Events", sector: "Events", since: "2024", featured: true, slug: "upcoming-events" },
   { name: "Quanta", sector: "Quant", since: "2022" },
-  { name: "Nimbus Health", sector: "HealthTech", since: "2025", featured: true, slug: "nimbus-health" },
+  { name: "Event Staffing", sector: "Staffing", since: "2025", featured: true, slug: "event-staffing" },
   { name: "Orbis", sector: "Logistics", since: "2023" },
   { name: "Vela Mobility", sector: "Transport", since: "2024" },
   { name: "Greycroft", sector: "Venture", since: "2022" },

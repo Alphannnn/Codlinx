@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import PageHero from "../../components/PageHero";
 import ClosingCTA from "../../components/ClosingCTA";
 import Counter from "../../components/Counter";
@@ -12,7 +12,10 @@ import Parallax from "../../components/Parallax";
 import ScrollProgress from "../../components/ScrollProgress";
 import { PROJECTS, ACCENT, type Project } from "../../lib/projects";
 
-export const dynamicParams = false;
+// Pre-render the real case studies, but allow unknown slugs to be handled at
+// runtime so a stale/old link (e.g. a cached clients card, a typo, or a
+// legacy /work/<client> URL) gracefully redirects to /work instead of 404ing.
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -40,7 +43,7 @@ export default async function CaseStudyPage({
 }) {
   const { slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
-  if (!project) notFound();
+  if (!project) redirect("/work");
 
   const index = PROJECTS.indexOf(project);
   const prev = PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length];

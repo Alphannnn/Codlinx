@@ -17,7 +17,7 @@ export default function LiveSitePreview({
   label,
   previewImage,
 }: Props) {
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLAnchorElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -58,9 +58,15 @@ export default function LiveSitePreview({
   }, [shouldLoad, loaded]);
 
   return (
-    <div
+    // The entire preview is one link: clicking anywhere on the image — or the
+    // "Open live" pill — opens the project's live site in a new tab.
+    <a
       ref={wrapRef}
-      className="group/preview absolute inset-0 overflow-hidden"
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open ${label || domain} live site in a new tab`}
+      className="group/preview absolute inset-0 block cursor-pointer overflow-hidden"
       style={{
         background: `radial-gradient(circle at 30% 20%, ${hue}, transparent 65%), linear-gradient(135deg, #0a0a0b 0%, #111114 100%)`,
       }}
@@ -75,7 +81,7 @@ export default function LiveSitePreview({
         }}
       />
 
-      <div className="absolute inset-0 flex items-center justify-center p-6">
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6">
         <div
           className="codlinx-preview-frame relative w-full overflow-hidden rounded-xl border border-white/10 bg-black shadow-[0_30px_80px_-40px_rgba(0,0,0,0.7)] transition-transform duration-700 ease-out group-hover/preview:scale-[1.03]"
           style={{ aspectRatio: "16 / 10" }}
@@ -161,24 +167,8 @@ export default function LiveSitePreview({
         </div>
       </div>
 
-      {/* Full-area click target so tapping anywhere on the preview opens the
-          live site in a new tab — not just the pill below. */}
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Open ${label || domain} live site in a new tab`}
-        className="absolute inset-0 z-[1]"
-        onClick={(e) => e.stopPropagation()}
-      />
-
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="codlinx-preview-cta absolute bottom-4 right-4 z-[2] inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md transition-all duration-300 hover:border-white/35 hover:bg-black/90"
-        onClick={(e) => e.stopPropagation()}
-      >
+      {/* Visual-only pill — the whole card is the link, so this is a span. */}
+      <span className="codlinx-preview-cta pointer-events-none absolute bottom-4 right-4 z-[1] inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md transition-all duration-300 group-hover/preview:border-white/35 group-hover/preview:bg-black/90">
         <span
           className="h-1.5 w-1.5 rounded-full"
           style={{ backgroundColor: swatch }}
@@ -196,7 +186,7 @@ export default function LiveSitePreview({
         >
           <path d="M6 3h7v7M13 3L4 12" />
         </svg>
-      </a>
-    </div>
+      </span>
+    </a>
   );
 }

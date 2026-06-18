@@ -89,6 +89,13 @@ export default function ContactForm() {
     e.preventDefault();
     if (!consent || status === "sending") return;
 
+    // Google verification is required before a brief can be sent.
+    if (!verified) {
+      setErrorMsg("Please verify your email with Google before sending.");
+      setStatus("error");
+      return;
+    }
+
     // Client-side validation (Web3Forms free plan requires browser submission).
     if (!name.trim()) {
       setErrorMsg("Please add your name.");
@@ -208,7 +215,7 @@ export default function ContactForm() {
                     <div className="my-6 flex items-center gap-3">
                       <span className="h-px flex-1 bg-zinc-900/[0.08]" />
                       <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-400">
-                        or enter details manually
+                        your details
                       </span>
                       <span className="h-px flex-1 bg-zinc-900/[0.08]" />
                     </div>
@@ -229,6 +236,7 @@ export default function ContactForm() {
                         autoComplete="email"
                         type="email"
                         locked={verified}
+                        readOnly={!verified}
                       />
                       <FloatField
                         label="Company"
@@ -349,17 +357,29 @@ export default function ContactForm() {
 
                   <div className="mt-8 flex flex-col-reverse items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-xs text-zinc-500">
-                      Prefer email? Write to{" "}
-                      <a
-                        className="font-semibold text-zinc-900 underline-offset-4 hover:underline"
-                        href="mailto:info@codlinx.com"
-                      >
-                        info@codlinx.com
-                      </a>
+                      {!verified ? (
+                        <span className="inline-flex items-center gap-1.5 font-medium text-zinc-600">
+                          <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                            <rect x="3" y="7" width="10" height="7" rx="1.5" />
+                            <path d="M5 7V5a3 3 0 0 1 6 0v2" />
+                          </svg>
+                          Verify with Google above to send your brief.
+                        </span>
+                      ) : (
+                        <>
+                          Prefer email? Write to{" "}
+                          <a
+                            className="font-semibold text-zinc-900 underline-offset-4 hover:underline"
+                            href="mailto:info@codlinx.com"
+                          >
+                            info@codlinx.com
+                          </a>
+                        </>
+                      )}
                     </p>
                     <button
                       type="submit"
-                      disabled={status === "sending" || !consent}
+                      disabled={status === "sending" || !consent || !verified}
                       className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-zinc-900 px-6 text-sm font-semibold text-white transition-all duration-300 enabled:hover:scale-[1.03] enabled:hover:bg-black disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {status === "sending" ? (
@@ -664,6 +684,7 @@ function FloatField({
   onChange,
   autoComplete,
   locked = false,
+  readOnly = false,
 }: {
   label: string;
   type?: string;
@@ -672,6 +693,7 @@ function FloatField({
   onChange: (v: string) => void;
   autoComplete?: string;
   locked?: boolean;
+  readOnly?: boolean;
 }) {
   const id = `f-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   return (
@@ -683,12 +705,14 @@ function FloatField({
         autoComplete={autoComplete}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        readOnly={locked}
+        readOnly={locked || readOnly}
         placeholder=" "
         className={`codlinx-float-input peer ${locked ? "pr-10" : ""}`}
         style={
           locked
             ? { borderColor: ACCENT, boxShadow: `0 0 0 3px ${ACCENT}22`, cursor: "default" }
+            : readOnly
+            ? { backgroundColor: "#fafafa", cursor: "not-allowed" }
             : undefined
         }
       />

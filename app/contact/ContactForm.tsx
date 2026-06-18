@@ -58,6 +58,15 @@ export default function ContactForm() {
   const [errorMsg, setErrorMsg] = useState("");
   const [verified, setVerified] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
+  const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Elegant "sign in first" notification, auto-dismisses.
+  const showNotice = useCallback((msg: string) => {
+    setNotice(msg);
+    if (noticeTimer.current) clearTimeout(noticeTimer.current);
+    noticeTimer.current = setTimeout(() => setNotice(null), 4500);
+  }, []);
 
   // Called when the user picks a Google account — auto-fills + verifies email.
   const handleVerified = useCallback((gName: string, gEmail: string) => {
@@ -67,6 +76,7 @@ export default function ContactForm() {
     }
     setName((prev) => prev || gName);
     setErrorMsg("");
+    setNotice(null);
   }, []);
 
   const toggleService = (s: string) =>
@@ -87,12 +97,16 @@ export default function ContactForm() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!consent || status === "sending") return;
+    if (status === "sending") return;
 
-    // Google verification is required before a brief can be sent.
+    // Sign-in is required first — show the beautiful notification, don't submit.
     if (!verified) {
-      setErrorMsg("Please verify your email with Google before sending.");
-      setStatus("error");
+      showNotice("Sign in with Google to verify your email before sending your brief.");
+      return;
+    }
+
+    if (!consent) {
+      showNotice("Please accept the privacy policy to continue.");
       return;
     }
 
@@ -157,6 +171,45 @@ export default function ContactForm() {
 
   return (
     <>
+      {notice && (
+        <div
+          className="fixed left-1/2 top-6 z-[110] w-[calc(100%-2rem)] max-w-md -translate-x-1/2"
+          role="alert"
+          aria-live="assertive"
+          style={{ animation: "codlinx-toast-in 0.45s cubic-bezier(0.22,1,0.36,1) both" }}
+        >
+          <div className="flex items-start gap-3.5 rounded-2xl border border-zinc-900/[0.06] bg-white/95 p-4 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+            <span
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl"
+              style={{ backgroundColor: `${ACCENT}1a` }}
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden>
+                <path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.05H12v3.88h5.9a5.05 5.05 0 0 1-2.19 3.31v2.76h3.54c2.07-1.91 3.25-4.72 3.25-7.9z" />
+                <path fill="#34A853" d="M12 23c2.95 0 5.43-.98 7.24-2.65l-3.54-2.76c-.98.66-2.24 1.05-3.7 1.05-2.85 0-5.26-1.92-6.12-4.5H2.23v2.84A11 11 0 0 0 12 23z" />
+                <path fill="#FBBC05" d="M5.88 14.14a6.6 6.6 0 0 1 0-4.28V7.02H2.23a11 11 0 0 0 0 9.96l3.65-2.84z" />
+                <path fill="#EA4335" d="M12 5.32c1.6 0 3.05.55 4.18 1.63l3.14-3.14C17.43 2.01 14.95 1 12 1 7.7 1 3.99 3.47 2.23 7.02l3.65 2.84C6.74 7.24 9.15 5.32 12 5.32z" />
+              </svg>
+            </span>
+            <div className="min-w-0 pt-0.5">
+              <p className="text-sm font-semibold tracking-tight text-zinc-900">
+                Sign in required
+              </p>
+              <p className="mt-0.5 text-[13px] leading-relaxed text-zinc-600">{notice}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setNotice(null)}
+              aria-label="Dismiss"
+              className="ml-auto -mr-1 -mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-900/[0.05] hover:text-zinc-700"
+            >
+              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+                <path d="M3 3l10 10M13 3L3 13" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       {showToast && (
         <div
           className="fixed left-1/2 top-6 z-[100] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2"
@@ -237,6 +290,11 @@ export default function ContactForm() {
                         type="email"
                         locked={verified}
                         readOnly={!verified}
+                        onLockedInteract={() =>
+                          showNotice(
+                            "Sign in with Google to verify your email — your address fills in automatically."
+                          )
+                        }
                       />
                       <FloatField
                         label="Company"
@@ -379,8 +437,13 @@ export default function ContactForm() {
                     </p>
                     <button
                       type="submit"
-                      disabled={status === "sending" || !consent || !verified}
-                      className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-zinc-900 px-6 text-sm font-semibold text-white transition-all duration-300 enabled:hover:scale-[1.03] enabled:hover:bg-black disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={status === "sending"}
+                      aria-disabled={!verified || !consent}
+                      className={`group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-zinc-900 px-6 text-sm font-semibold text-white transition-all duration-300 disabled:cursor-not-allowed ${
+                        verified && consent
+                          ? "enabled:hover:scale-[1.03] enabled:hover:bg-black"
+                          : "opacity-60"
+                      }`}
                     >
                       {status === "sending" ? (
                         <>
@@ -685,6 +748,7 @@ function FloatField({
   autoComplete,
   locked = false,
   readOnly = false,
+  onLockedInteract,
 }: {
   label: string;
   type?: string;
@@ -694,8 +758,10 @@ function FloatField({
   autoComplete?: string;
   locked?: boolean;
   readOnly?: boolean;
+  onLockedInteract?: () => void;
 }) {
   const id = `f-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  const pending = readOnly && !locked;
   return (
     <div className="codlinx-float-wrap">
       <input
@@ -706,6 +772,8 @@ function FloatField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         readOnly={locked || readOnly}
+        onMouseDown={pending ? () => onLockedInteract?.() : undefined}
+        onFocus={pending ? () => onLockedInteract?.() : undefined}
         placeholder=" "
         className={`codlinx-float-input peer ${locked ? "pr-10" : ""}`}
         style={

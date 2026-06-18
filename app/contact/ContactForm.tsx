@@ -1,11 +1,30 @@
 "use client";
 
-import { useMemo, useState, type FormEvent, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
+import Script from "next/script";
 import PageHero from "../components/PageHero";
-import { sendContactBrief } from "../lib/actions/contact";
 
 const ACCENT = "#3FC9B4";
+
+// Web3Forms access key — public by design (submitted from the browser; the
+// free plan requires client-side submission). Override via NEXT_PUBLIC_WEB3FORMS_KEY.
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "64db5f3a-b992-48dd-bba3-d16ca9ea3aa3";
+
+// Public Google OAuth client ID for "Continue with Google" (safe to expose).
+// Override per-environment with NEXT_PUBLIC_GOOGLE_CLIENT_ID.
+const GOOGLE_CLIENT_ID =
+  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ||
+  "305500064802-1geriaud4upvqqhrcegb9m72527p9rcj.apps.googleusercontent.com";
 
 const BUDGETS = ["< $5K", "$5K–$10K", "$10K–$20K", "$20K+", "Not sure"];
 const SERVICES = [
@@ -37,6 +56,18 @@ export default function ContactForm() {
   const [timeline, setTimeline] = useState<string>("");
   const [consent, setConsent] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [verified, setVerified] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  // Called when the user picks a Google account — auto-fills + verifies email.
+  const handleVerified = useCallback((gName: string, gEmail: string) => {
+    if (gEmail) {
+      setEmail(gEmail);
+      setVerified(true);
+    }
+    setName((prev) => prev || gName);
+    setErrorMsg("");
+  }, []);
 
   const toggleService = (s: string) =>
     setSelectedServices((prev) =>
@@ -57,28 +88,91 @@ export default function ContactForm() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!consent || status === "sending") return;
+
+    // Client-side validation (Web3Forms free plan requires browser submission).
+    if (!name.trim()) {
+      setErrorMsg("Please add your name.");
+      setStatus("error");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setErrorMsg("Please add a valid email.");
+      setStatus("error");
+      return;
+    }
+    if (brief.trim().length < 10) {
+      setErrorMsg("Please tell us a little more about the project.");
+      setStatus("error");
+      return;
+    }
+
     setErrorMsg("");
     setStatus("sending");
-    const res = await sendContactBrief({
-      name,
-      email,
-      company,
-      role,
-      brief,
-      services: selectedServices,
-      budget,
-      timeline,
-    });
-    if (res.ok) {
-      setStatus("sent");
-    } else {
-      setErrorMsg(res.error);
+
+    const message =
+      `New project brief from codlinx.com\n\n` +
+      `Name:      ${name}\n` +
+      `Email:     ${email}${verified ? " (✓ verified via Google)" : ""}\n` +
+      `Company:   ${company || "—"}\n` +
+      `Role:      ${role || "—"}\n` +
+      `Services:  ${selectedServices.length ? selectedServices.join(", ") : "—"}\n` +
+      `Budget:    ${budget || "—"}\n` +
+      `Timeline:  ${timeline || "—"}\n\n` +
+      `Brief:\n${brief}\n`;
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `New project brief — ${name}${company ? ` (${company})` : ""}`,
+          from_name: "Codlinx Website",
+          email, // reply-to → the lead
+          name,
+          message,
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { success?: boolean };
+      if (data.success) {
+        setStatus("sent");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 6000);
+      } else {
+        setErrorMsg("Couldn't send right now. Please try again or email info@codlinx.com.");
+        setStatus("error");
+      }
+    } catch {
+      setErrorMsg("Couldn't send right now. Please email info@codlinx.com.");
       setStatus("error");
     }
   };
 
   return (
     <>
+      {showToast && (
+        <div
+          className="fixed left-1/2 top-6 z-[100] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2"
+          role="status"
+          aria-live="polite"
+          style={{ animation: "codlinx-toast-in 0.5s cubic-bezier(0.22,1,0.36,1) both" }}
+        >
+          <div
+            className="flex items-center gap-3 rounded-2xl px-5 py-3.5 text-sm font-semibold text-white shadow-[0_20px_45px_-12px_rgba(16,185,129,0.65)]"
+            style={{ background: "linear-gradient(120deg, #10b981 0%, #059669 100%)" }}
+          >
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/25">
+              <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M3 8.5l3.5 3.5L13 5" />
+              </svg>
+            </span>
+            <span className="leading-tight">
+              Message sent — we&apos;ll reply within 24 hours.
+            </span>
+          </div>
+        </div>
+      )}
+
       <PageHero
         eyebrow="Start a project"
         title="Tell us what you're"
@@ -106,6 +200,18 @@ export default function ContactForm() {
 
                 <div className="p-7 sm:p-10">
                   <Step number="01" title="About you">
+                    <GoogleVerify
+                      clientId={GOOGLE_CLIENT_ID}
+                      verifiedEmail={verified ? email : null}
+                      onVerified={handleVerified}
+                    />
+                    <div className="my-6 flex items-center gap-3">
+                      <span className="h-px flex-1 bg-zinc-900/[0.08]" />
+                      <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-400">
+                        or enter details manually
+                      </span>
+                      <span className="h-px flex-1 bg-zinc-900/[0.08]" />
+                    </div>
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                       <FloatField
                         label="Full name"
@@ -122,6 +228,7 @@ export default function ContactForm() {
                         onChange={setEmail}
                         autoComplete="email"
                         type="email"
+                        locked={verified}
                       />
                       <FloatField
                         label="Company"
@@ -392,6 +499,16 @@ export default function ContactForm() {
         .codlinx-float-input:focus + .codlinx-float-label {
           color: ${ACCENT};
         }
+        @keyframes codlinx-toast-in {
+          from {
+            opacity: 0;
+            transform: translate(-50%, -16px) scale(0.96);
+          }
+          to {
+            opacity: 1;
+            transform: translate(-50%, 0) scale(1);
+          }
+        }
       `}</style>
     </>
   );
@@ -448,6 +565,97 @@ function Divider() {
   return <div className="my-8 h-px w-full bg-zinc-900/[0.06]" />;
 }
 
+function GoogleVerify({
+  clientId,
+  verifiedEmail,
+  onVerified,
+}: {
+  clientId: string;
+  verifiedEmail: string | null;
+  onVerified: (name: string, email: string) => void;
+}) {
+  const btnRef = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
+  const cbRef = useRef(onVerified);
+  cbRef.current = onVerified;
+  const renderedRef = useRef(false);
+
+  useEffect(() => {
+    if (!ready || verifiedEmail || renderedRef.current || !btnRef.current) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const g = (window as any).google;
+    if (!g?.accounts?.id) return;
+    g.accounts.id.initialize({
+      client_id: clientId,
+      ux_mode: "popup",
+      callback: (resp: { credential?: string }) => {
+        try {
+          if (!resp.credential) return;
+          const json = atob(
+            resp.credential.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")
+          );
+          const payload = JSON.parse(
+            decodeURIComponent(
+              json
+                .split("")
+                .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+                .join("")
+            )
+          );
+          cbRef.current(payload.name || "", payload.email || "");
+        } catch {
+          /* ignore malformed token */
+        }
+      },
+    });
+    g.accounts.id.renderButton(btnRef.current, {
+      type: "standard",
+      theme: "outline",
+      size: "large",
+      text: "continue_with",
+      shape: "pill",
+      logo_alignment: "left",
+      width: 300,
+    });
+    renderedRef.current = true;
+  }, [ready, clientId, verifiedEmail]);
+
+  if (verifiedEmail) {
+    return (
+      <div
+        className="flex items-center gap-2.5 rounded-xl border px-4 py-3 text-sm font-medium"
+        style={{ borderColor: `${ACCENT}55`, backgroundColor: `${ACCENT}12`, color: "#0c6b5e" }}
+      >
+        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full" style={{ backgroundColor: ACCENT }}>
+          <svg viewBox="0 0 16 16" className="h-3 w-3 text-white" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M3 8.5l3.5 3.5L13 5" />
+          </svg>
+        </span>
+        <span className="min-w-0 truncate">
+          Verified as <span className="font-semibold">{verifiedEmail}</span>
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Script
+        src="https://accounts.google.com/gsi/client"
+        strategy="afterInteractive"
+        onLoad={() => setReady(true)}
+        onReady={() => setReady(true)}
+      />
+      <div className="flex flex-col items-start gap-2">
+        <div ref={btnRef} className="min-h-[44px]" />
+        <p className="text-xs text-zinc-500">
+          Verify your email in one tap — faster, and we know it&apos;s really you.
+        </p>
+      </div>
+    </>
+  );
+}
+
 function FloatField({
   label,
   type = "text",
@@ -455,6 +663,7 @@ function FloatField({
   value,
   onChange,
   autoComplete,
+  locked = false,
 }: {
   label: string;
   type?: string;
@@ -462,6 +671,7 @@ function FloatField({
   value: string;
   onChange: (v: string) => void;
   autoComplete?: string;
+  locked?: boolean;
 }) {
   const id = `f-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   return (
@@ -473,13 +683,31 @@ function FloatField({
         autoComplete={autoComplete}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        readOnly={locked}
         placeholder=" "
-        className="codlinx-float-input peer"
+        className={`codlinx-float-input peer ${locked ? "pr-10" : ""}`}
+        style={
+          locked
+            ? { borderColor: ACCENT, boxShadow: `0 0 0 3px ${ACCENT}22`, cursor: "default" }
+            : undefined
+        }
       />
       <label htmlFor={id} className="codlinx-float-label">
         {label}
         {required && <span className="ml-0.5 text-rose-500">*</span>}
       </label>
+      {locked && (
+        <span
+          className="absolute right-3 top-1/2 -translate-y-1/2"
+          style={{ color: ACCENT }}
+          title="Verified with Google"
+          aria-label="Verified with Google"
+        >
+          <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M3 8.5l3.5 3.5L13 5" />
+          </svg>
+        </span>
+      )}
     </div>
   );
 }

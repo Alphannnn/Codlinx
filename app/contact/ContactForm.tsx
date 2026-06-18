@@ -173,39 +173,22 @@ export default function ContactForm() {
     <>
       {notice && (
         <div
-          className="fixed left-1/2 top-6 z-[110] w-[calc(100%-2rem)] max-w-md -translate-x-1/2"
+          className="fixed left-1/2 top-6 z-[110] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2"
           role="alert"
           aria-live="assertive"
           style={{ animation: "codlinx-toast-in 0.45s cubic-bezier(0.22,1,0.36,1) both" }}
         >
-          <div className="flex items-start gap-3.5 rounded-2xl border border-zinc-900/[0.06] bg-white/95 p-4 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-            <span
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl"
-              style={{ backgroundColor: `${ACCENT}1a` }}
-            >
-              <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden>
-                <path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.05H12v3.88h5.9a5.05 5.05 0 0 1-2.19 3.31v2.76h3.54c2.07-1.91 3.25-4.72 3.25-7.9z" />
-                <path fill="#34A853" d="M12 23c2.95 0 5.43-.98 7.24-2.65l-3.54-2.76c-.98.66-2.24 1.05-3.7 1.05-2.85 0-5.26-1.92-6.12-4.5H2.23v2.84A11 11 0 0 0 12 23z" />
-                <path fill="#FBBC05" d="M5.88 14.14a6.6 6.6 0 0 1 0-4.28V7.02H2.23a11 11 0 0 0 0 9.96l3.65-2.84z" />
-                <path fill="#EA4335" d="M12 5.32c1.6 0 3.05.55 4.18 1.63l3.14-3.14C17.43 2.01 14.95 1 12 1 7.7 1 3.99 3.47 2.23 7.02l3.65 2.84C6.74 7.24 9.15 5.32 12 5.32z" />
+          <div
+            className="flex items-center gap-3 rounded-2xl px-5 py-3.5 text-sm font-semibold text-white shadow-[0_20px_45px_-12px_rgba(245,158,11,0.6)]"
+            style={{ background: "linear-gradient(120deg, #f59e0b 0%, #d97706 100%)" }}
+          >
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/25">
+              <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <rect x="3" y="7" width="10" height="7" rx="1.5" />
+                <path d="M5 7V5a3 3 0 0 1 6 0v2" />
               </svg>
             </span>
-            <div className="min-w-0 pt-0.5">
-              <p className="text-sm font-semibold tracking-tight text-zinc-900">
-                Sign in required
-              </p>
-              <p className="mt-0.5 text-[13px] leading-relaxed text-zinc-600">{notice}</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setNotice(null)}
-              aria-label="Dismiss"
-              className="ml-auto -mr-1 -mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-900/[0.05] hover:text-zinc-700"
-            >
-              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-                <path d="M3 3l10 10M13 3L3 13" />
-              </svg>
-            </button>
+            <span className="leading-tight">{notice}</span>
           </div>
         </div>
       )}

@@ -845,13 +845,21 @@ export function getFeatureRows(slug: string): FeatureRow[] {
   return FEATURE_ROWS[slug] ?? [];
 }
 
+export type PortfolioNavLink = {
+  label: string;
+  href: string;
+  description: string;
+  /** Nested flyout sub-links (e.g. Portfolio › Web Development). */
+  children?: PortfolioNavLink[];
+};
+
 /**
  * Nav-link list for the Codlinx navbar Portfolio dropdown.
  * Curated to the six core categories, in this exact order. Other portfolio
  * pages still exist and render — they're just not surfaced in the dropdown.
  */
 const PORTFOLIO_NAV_SLUGS = [
-  "web-development", // "Websites"
+  "web-development", // "Websites" — expands into the web-dev sub-pages
   "mobile-apps",
   "social-media-management", // "Social Media"
   "paid-ads", // "Paid Ads"
@@ -859,14 +867,32 @@ const PORTFOLIO_NAV_SLUGS = [
   "seo-services", // "SEO"
 ] as const;
 
-export const PORTFOLIO_NAV = PORTFOLIO_NAV_SLUGS.map((slug) => {
+/** Sub-pages nested under "Web Development" (Node JS intentionally omitted). */
+const WEB_DEV_CHILD_SLUGS = [
+  "web-development",
+  "shopify",
+  "wordpress",
+  "website-maintenance",
+] as const;
+
+function navLinkFor(slug: string): PortfolioNavLink {
   const p = PORTFOLIO_PAGES.find((page) => page.slug === slug)!;
   return {
     label: p.navLabel,
     href: `/portfolio/${p.slug}`,
     description: p.navDescription,
   };
-});
+}
+
+export const PORTFOLIO_NAV: PortfolioNavLink[] = PORTFOLIO_NAV_SLUGS.map(
+  (slug) => {
+    const base = navLinkFor(slug);
+    if (slug === "web-development") {
+      return { ...base, children: WEB_DEV_CHILD_SLUGS.map(navLinkFor) };
+    }
+    return base;
+  }
+);
 
 /** Grouped for the landing page, mirroring the Digital Otters menu structure. */
 export const PORTFOLIO_GROUPS: { group: PortfolioGroup; pages: PortfolioPage[] }[] = (

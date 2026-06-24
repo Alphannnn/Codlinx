@@ -9,6 +9,8 @@ type NavLink = {
   label: string;
   href: string;
   description?: string;
+  /** Nested flyout sub-links (e.g. Portfolio › Web Development). */
+  children?: NavLink[];
 };
 
 type NavItem = {
@@ -129,7 +131,9 @@ export default function Navbar({ user = null }: { user?: NavUser | null }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openSub, setOpenSub] = useState<string | null>(null);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  const [mobileSub, setMobileSub] = useState<string | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -157,6 +161,10 @@ export default function Navbar({ user = null }: { user?: NavUser | null }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  useEffect(() => {
+    if (!openMenu) setOpenSub(null);
+  }, [openMenu]);
 
   const scheduleClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -259,37 +267,141 @@ export default function Navbar({ user = null }: { user?: NavUser | null }) {
                         style={{ backgroundColor: ACCENT }}
                       />
                       <ul className="relative grid grid-cols-2 gap-1">
-                        {item.children!.map((child) => (
-                          <li key={child.label}>
-                            <Link
-                              href={child.href}
-                              className="group flex flex-col gap-0.5 rounded-xl p-3 transition-colors duration-200 hover:bg-white/[0.04]"
+                        {item.children!.map((child) => {
+                          const hasSub = !!child.children?.length;
+                          const subOpen = openSub === child.label;
+                          return (
+                            <li
+                              key={child.label}
+                              onMouseEnter={() =>
+                                setOpenSub(hasSub ? child.label : null)
+                              }
                             >
-                              <span className="flex items-center gap-2 text-sm font-medium text-white">
-                                {child.label}
-                                <svg
-                                  viewBox="0 0 16 16"
-                                  className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
-                                  style={{ color: ACCENT }}
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
+                              {hasSub ? (
+                                <button
+                                  type="button"
+                                  aria-haspopup="true"
+                                  aria-expanded={subOpen}
+                                  className={[
+                                    "group flex w-full items-center justify-between gap-2 rounded-xl p-3 text-left transition-colors duration-200",
+                                    subOpen
+                                      ? "bg-white/[0.06]"
+                                      : "hover:bg-white/[0.04]",
+                                  ].join(" ")}
                                 >
-                                  <path d="M5 3l5 5-5 5" />
-                                </svg>
-                              </span>
-                              {child.description && (
-                                <span className="text-xs leading-relaxed text-white/50">
-                                  {child.description}
-                                </span>
+                                  <span className="flex flex-col gap-0.5">
+                                    <span className="text-sm font-medium text-white">
+                                      {child.label}
+                                    </span>
+                                    {child.description && (
+                                      <span className="text-xs leading-relaxed text-white/50">
+                                        {child.description}
+                                      </span>
+                                    )}
+                                  </span>
+                                  <svg
+                                    viewBox="0 0 16 16"
+                                    className={`h-3.5 w-3.5 shrink-0 transition-colors ${
+                                      subOpen ? "text-[#3FC9B4]" : "text-white/40"
+                                    }`}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    aria-hidden
+                                  >
+                                    <path d="M6 3l5 5-5 5" />
+                                  </svg>
+                                </button>
+                              ) : (
+                                <Link
+                                  href={child.href}
+                                  className="group flex flex-col gap-0.5 rounded-xl p-3 transition-colors duration-200 hover:bg-white/[0.04]"
+                                >
+                                  <span className="flex items-center gap-2 text-sm font-medium text-white">
+                                    {child.label}
+                                    <svg
+                                      viewBox="0 0 16 16"
+                                      className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                                      style={{ color: ACCENT }}
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M5 3l5 5-5 5" />
+                                    </svg>
+                                  </span>
+                                  {child.description && (
+                                    <span className="text-xs leading-relaxed text-white/50">
+                                      {child.description}
+                                    </span>
+                                  )}
+                                </Link>
                               )}
-                            </Link>
-                          </li>
-                        ))}
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
+
+                    {/* Nested flyout(s) — e.g. Portfolio › Web Development */}
+                    {item
+                      .children!.filter((c) => c.children?.length)
+                      .map((parent) => {
+                        const subOpen = openSub === parent.label;
+                        return (
+                          <div
+                            key={`flyout-${parent.label}`}
+                            onMouseEnter={() => {
+                              cancelClose();
+                              setOpenSub(parent.label);
+                            }}
+                            className={[
+                              "absolute right-[calc(100%+8px)] top-0 w-64 origin-top-right transition-all duration-200 ease-out",
+                              subOpen
+                                ? "pointer-events-auto translate-x-0 opacity-100 scale-100"
+                                : "pointer-events-none translate-x-2 opacity-0 scale-[0.98]",
+                            ].join(" ")}
+                          >
+                            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0b0b0c]/95 p-2 shadow-2xl backdrop-blur-2xl">
+                              <ul className="flex flex-col gap-1">
+                                {parent.children!.map((sub) => (
+                                  <li key={sub.label}>
+                                    <Link
+                                      href={sub.href}
+                                      className="group flex flex-col gap-0.5 rounded-xl p-3 transition-colors duration-200 hover:bg-white/[0.04]"
+                                    >
+                                      <span className="flex items-center gap-2 text-sm font-medium text-white">
+                                        {sub.label}
+                                        <svg
+                                          viewBox="0 0 16 16"
+                                          className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                                          style={{ color: ACCENT }}
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        >
+                                          <path d="M5 3l5 5-5 5" />
+                                        </svg>
+                                      </span>
+                                      {sub.description && (
+                                        <span className="text-xs leading-relaxed text-white/50">
+                                          {sub.description}
+                                        </span>
+                                      )}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        );
+                      })}
                   </div>
                 )}
               </li>
@@ -523,24 +635,104 @@ export default function Navbar({ user = null }: { user?: NavUser | null }) {
                       >
                         <div className="overflow-hidden">
                           <ul className="flex flex-col gap-1 pb-3 pl-1">
-                            {item.children!.map((child) => (
-                              <li key={child.label}>
-                                <Link
-                                  href={child.href}
-                                  onClick={() => setMobileOpen(false)}
-                                  className="flex flex-col gap-0.5 rounded-lg px-3 py-2.5 hover:bg-white/[0.04]"
-                                >
-                                  <span className="text-sm font-medium text-white">
-                                    {child.label}
-                                  </span>
-                                  {child.description && (
-                                    <span className="text-xs text-white/50">
-                                      {child.description}
+                            {item.children!.map((child) => {
+                              const hasSub = !!child.children?.length;
+                              const subExpanded = mobileSub === child.label;
+                              if (hasSub) {
+                                return (
+                                  <li key={child.label}>
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        setMobileSub(
+                                          subExpanded ? null : child.label
+                                        )
+                                      }
+                                      aria-expanded={subExpanded}
+                                      className="flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-left hover:bg-white/[0.04]"
+                                    >
+                                      <span className="flex flex-col gap-0.5">
+                                        <span className="text-sm font-medium text-white">
+                                          {child.label}
+                                        </span>
+                                        {child.description && (
+                                          <span className="text-xs text-white/50">
+                                            {child.description}
+                                          </span>
+                                        )}
+                                      </span>
+                                      <svg
+                                        className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
+                                          subExpanded
+                                            ? "rotate-180 text-[#3FC9B4]"
+                                            : "text-white/50"
+                                        }`}
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden
+                                      >
+                                        <path
+                                          fillRule="evenodd"
+                                          d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z"
+                                          clipRule="evenodd"
+                                        />
+                                      </svg>
+                                    </button>
+                                    <div
+                                      className={[
+                                        "grid transition-[grid-template-rows] duration-300 ease-out",
+                                        subExpanded
+                                          ? "grid-rows-[1fr]"
+                                          : "grid-rows-[0fr]",
+                                      ].join(" ")}
+                                    >
+                                      <div className="overflow-hidden">
+                                        <ul className="flex flex-col gap-1 border-l border-white/[0.08] pb-1 pl-3">
+                                          {child.children!.map((sub) => (
+                                            <li key={sub.label}>
+                                              <Link
+                                                href={sub.href}
+                                                onClick={() =>
+                                                  setMobileOpen(false)
+                                                }
+                                                className="flex flex-col gap-0.5 rounded-lg px-3 py-2.5 hover:bg-white/[0.04]"
+                                              >
+                                                <span className="text-sm font-medium text-white">
+                                                  {sub.label}
+                                                </span>
+                                                {sub.description && (
+                                                  <span className="text-xs text-white/50">
+                                                    {sub.description}
+                                                  </span>
+                                                )}
+                                              </Link>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </li>
+                                );
+                              }
+                              return (
+                                <li key={child.label}>
+                                  <Link
+                                    href={child.href}
+                                    onClick={() => setMobileOpen(false)}
+                                    className="flex flex-col gap-0.5 rounded-lg px-3 py-2.5 hover:bg-white/[0.04]"
+                                  >
+                                    <span className="text-sm font-medium text-white">
+                                      {child.label}
                                     </span>
-                                  )}
-                                </Link>
-                              </li>
-                            ))}
+                                    {child.description && (
+                                      <span className="text-xs text-white/50">
+                                        {child.description}
+                                      </span>
+                                    )}
+                                  </Link>
+                                </li>
+                              );
+                            })}
                           </ul>
                         </div>
                       </div>

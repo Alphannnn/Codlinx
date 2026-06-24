@@ -169,6 +169,16 @@ select:focus-visible,
   to { --angle: 360deg; }
 }
 
+/* Gentle bob for social nodes (keeps the -50%,-50% centering transform). */
+@keyframes codlinx-float-soft {
+  0%, 100% { transform: translate(-50%, calc(-50% + 5px)); }
+  50%      { transform: translate(-50%, calc(-50% - 5px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .codlinx-float-soft { animation: none !important; }
+}
+
 .codlinx-marquee-track {
   animation: codlinx-marquee 38s linear infinite;
   will-change: transform;

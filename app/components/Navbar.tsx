@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { PORTFOLIO_NAV } from "../portfolio/lib/content";
 
 type NavLink = {
   label: string;
@@ -101,6 +102,10 @@ const NAV_ITEMS: NavItem[] = [
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },
   { label: "Blog", href: "/blog" },
+  {
+    label: "Portfolio",
+    children: PORTFOLIO_NAV,
+  },
 ];
 
 const ACCENT = "#3FC9B4";

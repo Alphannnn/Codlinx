@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PROJECTS } from "./lib/projects";
+import { PORTFOLIO_PAGES } from "./portfolio/lib/content";
 import { listBlogPosts } from "./lib/data";
 
 const SITE_URL = "https://codlinx.com";
@@ -25,6 +26,7 @@ const STATIC_ROUTES = [
   "/privacy",
   "/terms",
   "/security",
+  "/portfolio",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -52,5 +54,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...caseStudyEntries, ...blogEntries];
+  const portfolioEntries: MetadataRoute.Sitemap = PORTFOLIO_PAGES.map((p) => ({
+    url: `${SITE_URL}/portfolio/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [
+    ...staticEntries,
+    ...caseStudyEntries,
+    ...blogEntries,
+    ...portfolioEntries,
+  ];
 }

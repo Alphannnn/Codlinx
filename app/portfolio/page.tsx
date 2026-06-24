@@ -9,6 +9,7 @@ import {
   ACCENT,
   PORTFOLIO_GROUPS,
   PORTFOLIO_PAGES,
+  PORTFOLIO_THUMBS,
   WHY_CHOOSE,
 } from "./lib/content";
 
@@ -218,27 +219,44 @@ export default function PortfolioLanding() {
                   </div>
                 </Reveal>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {g.pages.map((p, idx) => (
+                  {g.pages.map((p, idx) => {
+                    const thumb = PORTFOLIO_THUMBS[p.slug];
+                    return (
                     <Reveal key={p.slug} delay={(idx % 3) * 80}>
                       <Link
                         href={`/portfolio/${p.slug}`}
-                        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.04]"
+                        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.04]"
                       >
-                        <div
-                          aria-hidden
-                          className="pointer-events-none absolute -inset-x-12 -top-12 h-32 -skew-x-12 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-                          style={{
-                            background: `linear-gradient(90deg, transparent, ${p.hue}, transparent)`,
-                          }}
-                        />
-                        <div className="relative flex h-full flex-col">
+                        <div className="relative aspect-[16/9] overflow-hidden">
+                          {thumb ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={thumb}
+                              alt={`${p.navLabel} preview`}
+                              loading="lazy"
+                              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                            />
+                          ) : (
+                            <div
+                              className="absolute inset-0"
+                              style={{
+                                background: `radial-gradient(circle at 30% 20%, ${p.hue}, transparent 65%), #0a0a0b`,
+                              }}
+                            />
+                          )}
+                          <div
+                            aria-hidden
+                            className="absolute inset-0 bg-gradient-to-t from-[#0b0b0c] via-[#0b0b0c]/30 to-transparent"
+                          />
                           <span
-                            className="grid h-10 w-10 place-items-center rounded-xl text-sm font-bold text-black"
+                            className="absolute left-3 top-3 grid h-9 w-9 place-items-center rounded-xl text-sm font-bold text-black shadow-lg"
                             style={{ backgroundColor: p.swatch }}
                           >
                             {p.navLabel.charAt(0)}
                           </span>
-                          <h3 className="mt-4 text-lg font-semibold tracking-tight text-white">
+                        </div>
+                        <div className="relative flex flex-1 flex-col p-6">
+                          <h3 className="text-lg font-semibold tracking-tight text-white">
                             {p.navLabel}
                           </h3>
                           <p className="mt-2 flex-1 text-sm leading-relaxed text-white/55">
@@ -265,7 +283,8 @@ export default function PortfolioLanding() {
                         </div>
                       </Link>
                     </Reveal>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}

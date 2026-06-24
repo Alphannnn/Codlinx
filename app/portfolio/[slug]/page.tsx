@@ -10,6 +10,7 @@ import SocialMediaPage from "../_components/SocialMediaPage";
 import {
   PORTFOLIO_PAGES,
   getPortfolioPage,
+  getPortfolioThumb,
   getFeatureRows,
   RECOGNIZED,
   WHY_CHOOSE,
@@ -1098,29 +1099,61 @@ export default async function PortfolioServicePage({
             </div>
           </Reveal>
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {others.map((o, idx) => (
-              <Reveal key={o.slug} delay={(idx % 4) * 60}>
-                <Link
-                  href={`/portfolio/${o.slug}`}
-                  className="group flex h-full flex-col justify-between gap-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/20"
-                >
-                  <span
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[11px] font-bold text-black"
-                    style={{ backgroundColor: o.swatch }}
+            {others.map((o, idx) => {
+              const thumb = getPortfolioThumb(o.slug);
+              return (
+                <Reveal key={o.slug} delay={(idx % 4) * 60}>
+                  <Link
+                    href={`/portfolio/${o.slug}`}
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] transition-all duration-300 hover:-translate-y-1 hover:border-white/20"
                   >
-                    {o.navLabel.charAt(0)}
-                  </span>
-                  <div>
-                    <h3 className="text-sm font-semibold text-white">
-                      {o.navLabel}
-                    </h3>
-                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/50">
-                      {o.navDescription}
-                    </p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      {thumb ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={thumb}
+                          alt={`${o.navLabel} preview`}
+                          loading="lazy"
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                        />
+                      ) : (
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: `radial-gradient(circle at 30% 20%, ${o.hue}, transparent 65%), #0a0a0b`,
+                          }}
+                        />
+                      )}
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"
+                      />
+                      <span
+                        className="absolute left-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-lg text-[11px] font-bold text-black shadow-lg"
+                        style={{ backgroundColor: o.swatch }}
+                      >
+                        {o.navLabel.charAt(0)}
+                      </span>
+                    </div>
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="text-sm font-semibold text-white">
+                        {o.navLabel}
+                      </h3>
+                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/50">
+                        {o.navDescription}
+                      </p>
+                      <span
+                        className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em]"
+                        style={{ color: o.swatch }}
+                      >
+                        View page
+                        <ArrowIcon className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>

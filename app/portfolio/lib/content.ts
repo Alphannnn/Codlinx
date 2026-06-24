@@ -800,6 +800,26 @@ export function getPortfolioPage(slug: string): PortfolioPage | undefined {
   return PORTFOLIO_PAGES.find((p) => p.slug === slug);
 }
 
+/** Representative thumbnail per portfolio page (locally hosted, themed photos). */
+export const PORTFOLIO_THUMBS: Record<string, string> = {
+  "social-media-management": "/projects/portfolio/social-media-management.jpg",
+  "seo-services": "/projects/portfolio/seo-services.jpg",
+  "reputation-management": "/projects/portfolio/reputation-management.jpg",
+  "web-development": "/projects/portfolio/web-development.jpg",
+  shopify: "/projects/portfolio/shopify.jpg",
+  wordpress: "/projects/portfolio/wordpress.jpg",
+  nodejs: "/projects/portfolio/nodejs.jpg",
+  "website-maintenance": "/projects/portfolio/website-maintenance.jpg",
+  "mobile-apps": "/projects/portfolio/mobile-apps.jpg",
+  "graphic-design": "/projects/portfolio/graphic-design.jpg",
+  "paid-ads": "/projects/portfolio/paid-ads.jpg",
+  tools: "/projects/portfolio/tools.jpg",
+};
+
+export function getPortfolioThumb(slug: string): string | undefined {
+  return PORTFOLIO_THUMBS[slug];
+}
+
 // ───────────────────────────────────────────────────────────────────────────
 // Faithful Digital Otters section data.
 //

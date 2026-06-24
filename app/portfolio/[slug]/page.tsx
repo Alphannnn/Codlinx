@@ -130,6 +130,107 @@ function VisualPanel({
   );
 }
 
+/** A clickable browser-framed card for a live showcase site (opens new tab). */
+function ShowcaseCard({
+  name,
+  url,
+  swatch,
+  hue,
+}: {
+  name: string;
+  url: string;
+  swatch: string;
+  hue: string;
+}) {
+  let domain = url;
+  try {
+    domain = new URL(url).host.replace(/^www\./, "");
+  } catch {
+    /* keep raw url */
+  }
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open ${name} (${domain}) in a new tab`}
+      className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] transition-all duration-300 hover:-translate-y-1 hover:border-white/25"
+    >
+      {/* Browser chrome */}
+      <div className="flex items-center gap-1.5 border-b border-white/[0.06] bg-black/60 px-3 py-2">
+        <span className="h-2 w-2 rounded-full bg-red-400/70" />
+        <span className="h-2 w-2 rounded-full bg-yellow-400/70" />
+        <span className="h-2 w-2 rounded-full bg-green-400/70" />
+        <span className="ml-2 truncate text-[10px] font-medium text-white/55">
+          {domain}
+        </span>
+      </div>
+
+      {/* Preview body */}
+      <div
+        className="relative aspect-[16/10] overflow-hidden"
+        style={{
+          background: `radial-gradient(circle at 30% 20%, ${hue}, transparent 65%), linear-gradient(135deg, #0a0a0b 0%, #111114 100%)`,
+        }}
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-40 transition-opacity duration-700 group-hover:opacity-60"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+        <div className="absolute inset-0 grid place-items-center">
+          <span
+            className="grid h-14 w-14 place-items-center rounded-2xl text-xl font-bold text-black transition-transform duration-300 group-hover:scale-110"
+            style={{ backgroundColor: swatch }}
+          >
+            {name.charAt(0)}
+          </span>
+        </div>
+        <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/90 backdrop-blur-md transition-all duration-300 group-hover:border-white/35 group-hover:bg-black/90">
+          <span
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ backgroundColor: swatch }}
+          />
+          Open live
+          <svg
+            viewBox="0 0 16 16"
+            className="h-2.5 w-2.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M6 3h7v7M13 3L4 12" />
+          </svg>
+        </span>
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between gap-3 p-4">
+        <h3 className="truncate text-sm font-semibold text-white">{name}</h3>
+        <svg
+          viewBox="0 0 16 16"
+          className="h-3.5 w-3.5 shrink-0 text-white/40 transition-colors group-hover:text-white"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M6 3h7v7M13 3L4 12" />
+        </svg>
+      </div>
+    </a>
+  );
+}
+
 export default async function PortfolioServicePage({
   params,
 }: {
@@ -300,6 +401,46 @@ export default async function PortfolioServicePage({
           </div>
         </div>
       </section>
+
+      {/* Live showcase — real example sites, each opens in a new tab */}
+      {page.showcase && (
+        <section className="bg-black py-20 sm:py-28">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <Reveal>
+              <div className="mx-auto max-w-2xl text-center">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: swatch }}
+                  />
+                  {page.showcase.kicker}
+                </span>
+                <h2 className="mt-5 text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl">
+                  {page.showcase.heading}
+                </h2>
+                {page.showcase.sub && (
+                  <p className="mt-4 text-pretty text-base leading-relaxed text-white/60">
+                    {page.showcase.sub}
+                  </p>
+                )}
+              </div>
+            </Reveal>
+
+            <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {page.showcase.sites.map((site, idx) => (
+                <Reveal key={site.url} delay={(idx % 3) * 80}>
+                  <ShowcaseCard
+                    name={site.name}
+                    url={site.url}
+                    swatch={swatch}
+                    hue={page.hue}
+                  />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Alternating feature rows */}
       {featureRows.length > 0 && (

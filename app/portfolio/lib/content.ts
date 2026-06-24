@@ -27,6 +27,13 @@ export type Package = {
   features: string[];
   featured?: boolean;
 };
+export type ShowcaseSite = { name: string; url: string };
+export type Showcase = {
+  kicker: string;
+  heading: string;
+  sub?: string;
+  sites: ShowcaseSite[];
+};
 
 export type PortfolioPage = {
   slug: string;
@@ -57,6 +64,8 @@ export type PortfolioPage = {
   marquee?: string[];
   industries?: string[];
   faqs?: Faq[];
+  /** Live example sites to showcase, each opening in a new tab. */
+  showcase?: Showcase;
 };
 
 export const PORTFOLIO_PAGES: PortfolioPage[] = [
@@ -299,6 +308,16 @@ export const PORTFOLIO_PAGES: PortfolioPage[] = [
       { q: "How long does it take to build a website?", a: "A focused marketing site can ship in weeks; complex applications and storefronts run longer. We scope honestly up front." },
       { q: "How do I know which tech stack to use?", a: "We recommend based on your goals, team, and budget — and we'll happily work within an existing stack when it's the right fit." },
     ],
+    showcase: {
+      kicker: "Web experiences worth studying",
+      heading: "The bar we build to.",
+      sub: "A few sites we point to when we talk craft — tap any to open it live in a new tab.",
+      sites: [
+        { name: "Chilli Bomba", url: "https://www.chillibomba.com/" },
+        { name: "MoxieSozo", url: "https://moxiesozo.com/" },
+        { name: "Locomotive", url: "https://locomotive.ca/" },
+      ],
+    },
   },
   {
     slug: "shopify",
@@ -357,6 +376,20 @@ export const PORTFOLIO_PAGES: PortfolioPage[] = [
       { q: "Custom theme or a premium one?", a: "Both are valid. We'll customize a premium theme when speed matters, or build bespoke when your brand demands it." },
       { q: "Do you support Shopify Plus?", a: "We do — including multi-store, scripts, and high-volume checkout customization." },
     ],
+    showcase: {
+      kicker: "Shopify storefronts worth studying",
+      heading: "Shopify, done right.",
+      sub: "Storefronts that set the bar for the stores we build — tap any to open it live in a new tab.",
+      sites: [
+        { name: "Popov Leather", url: "https://www.popovleather.com/" },
+        { name: "Suta", url: "https://suta.in/" },
+        { name: "Ridge", url: "https://ridge.com/" },
+        { name: "Beechtree", url: "https://beechtree.pk/" },
+        { name: "Sapphire", url: "https://pk.sapphireonline.pk/" },
+        { name: "Zeen Woman", url: "https://zeenwoman.com/" },
+        { name: "Bica Coffee", url: "https://www.bicacoffee.com/" },
+      ],
+    },
   },
   {
     slug: "wordpress",

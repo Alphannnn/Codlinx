@@ -279,6 +279,187 @@ function ShowcaseCard({
   );
 }
 
+/* ── Friendly, real-world icons per industry ───────────────────────
+   Each portfolio page lists its own industries; we match the name to a
+   recognizable icon so the grid feels human, not like abstract tech. */
+const INDUSTRY_ICONS: { test: (n: string) => boolean; paths: React.ReactNode }[] =
+  [
+    {
+      test: (n) => n.includes("fashion"),
+      paths: (
+        <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+      ),
+    },
+    {
+      test: (n) => n.includes("beauty"),
+      paths: <path d="M12 3 9.8 8.8 4 11l5.8 2.2L12 19l2.2-5.8L20 11l-5.8-2.2z" />,
+    },
+    {
+      test: (n) => n.includes("home"),
+      paths: (
+        <>
+          <path d="M3 9.5 12 3l9 6.5" />
+          <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10" />
+          <path d="M9 21v-6h6v6" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("electronic"),
+      paths: (
+        <>
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8M12 17v4" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("food") || n.includes("bev"),
+      paths: (
+        <>
+          <path d="M17 8h1a4 4 0 0 1 0 8h-1" />
+          <path d="M3 8h14v6a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z" />
+          <path d="M6 1v3M10 1v3M14 1v3" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("dtc"),
+      paths: (
+        <>
+          <path d="M3 7v5a2 2 0 0 0 .59 1.42l7 7a2 2 0 0 0 2.82 0l5.6-5.6a2 2 0 0 0 0-2.82l-7-7A2 2 0 0 0 12 4H5a2 2 0 0 0-2 2Z" />
+          <circle cx="7.5" cy="8.5" r="1.5" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("commerce"),
+      paths: (
+        <>
+          <circle cx="9" cy="20" r="1.5" />
+          <circle cx="18" cy="20" r="1.5" />
+          <path d="M2 3h3l2.2 12.2a1.5 1.5 0 0 0 1.5 1.3h8.4a1.5 1.5 0 0 0 1.5-1.2L22 7H6" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("health"),
+      paths: (
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z" />
+      ),
+    },
+    {
+      test: (n) => n.includes("estate"),
+      paths: (
+        <>
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+          <path d="M9 22v-4h6v4" />
+          <path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("saas"),
+      paths: (
+        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" />
+      ),
+    },
+    {
+      test: (n) => n.includes("edtech") || n.includes("education"),
+      paths: (
+        <>
+          <path d="M22 10 12 5 2 10l10 5 10-5z" />
+          <path d="M6 12v5c0 1 2.5 3 6 3s6-2 6-3v-5" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("fintech") || n.includes("finance"),
+      paths: (
+        <>
+          <rect x="2" y="5" width="20" height="14" rx="2" />
+          <path d="M2 10h20" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("logistic"),
+      paths: (
+        <>
+          <path d="M10 17h4V5H2v12h3" />
+          <path d="M14 8h4l4 4v5h-2" />
+          <circle cx="7.5" cy="17.5" r="1.5" />
+          <circle cx="17.5" cy="17.5" r="1.5" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("social"),
+      paths: (
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      ),
+    },
+    {
+      test: (n) => n.includes("hospitality"),
+      paths: (
+        <>
+          <path d="M3 19h18" />
+          <path d="M5 19a7 7 0 0 1 14 0" />
+          <path d="M12 6V4" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("corporate"),
+      paths: (
+        <>
+          <rect x="2" y="7" width="20" height="14" rx="2" />
+          <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          <path d="M2 13h20" />
+        </>
+      ),
+    },
+    {
+      test: (n) => n.includes("local"),
+      paths: (
+        <path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L3 18l3 3 6.1-6.1a4 4 0 0 0 5.6-5.6l-2.7 2.7-2.1-.6-.6-2.1z" />
+      ),
+    },
+    {
+      test: (n) => n.includes("tech"),
+      paths: (
+        <>
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+          <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z" />
+        </>
+      ),
+    },
+  ];
+
+const FALLBACK_INDUSTRY_ICON = (
+  <path d="M12 3l2.3 6.2L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3z" />
+);
+
+function IndustryGlyph({ name }: { name: string }) {
+  const n = name.toLowerCase();
+  const match = INDUSTRY_ICONS.find((i) => i.test(n));
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5 transition-transform duration-300 ease-out group-hover:scale-125 group-hover:-rotate-6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {match ? match.paths : FALLBACK_INDUSTRY_ICON}
+    </svg>
+  );
+}
+
 export default async function PortfolioServicePage({
   params,
 }: {
@@ -738,14 +919,24 @@ export default async function PortfolioServicePage({
             <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
               {page.industries.map((ind, idx) => (
                 <Reveal key={ind} delay={(idx % 6) * 50}>
-                  <div className="flex flex-col items-center gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] px-4 py-6 text-center transition-colors hover:border-white/20">
-                    <span
-                      className="grid h-11 w-11 place-items-center rounded-xl text-sm font-bold text-black"
-                      style={{ backgroundColor: swatch }}
-                    >
-                      {ind.charAt(0)}
+                  <div className="group flex flex-col items-center gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] px-4 py-6 text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-white/25 hover:bg-white/[0.04]">
+                    <span className="relative grid place-items-center">
+                      <span
+                        aria-hidden
+                        className="absolute h-11 w-11 rounded-xl opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-50"
+                        style={{ backgroundColor: swatch }}
+                      />
+                      <span
+                        className="codlinx-bob relative grid h-11 w-11 place-items-center rounded-xl text-black shadow-[0_10px_24px_-12px_rgba(0,0,0,0.7)]"
+                        style={{
+                          backgroundColor: swatch,
+                          animationDelay: `${(idx % 6) * 0.45}s`,
+                        }}
+                      >
+                        <IndustryGlyph name={ind} />
+                      </span>
                     </span>
-                    <span className="text-sm font-medium text-white/80">
+                    <span className="text-sm font-medium text-white/80 transition-colors group-hover:text-white">
                       {ind}
                     </span>
                   </div>

@@ -27,7 +27,7 @@ export type Package = {
   features: string[];
   featured?: boolean;
 };
-export type ShowcaseSite = { name: string; url: string };
+export type ShowcaseSite = { name: string; url: string; image?: string };
 export type Showcase = {
   kicker: string;
   heading: string;
@@ -313,8 +313,8 @@ export const PORTFOLIO_PAGES: PortfolioPage[] = [
       heading: "The bar we build to.",
       sub: "A few sites we point to when we talk craft — tap any to open it live in a new tab.",
       sites: [
-        { name: "Chilli Bomba", url: "https://www.chillibomba.com/" },
-        { name: "MoxieSozo", url: "https://moxiesozo.com/" },
+        { name: "Chilli Bomba", url: "https://www.chillibomba.com/", image: "/projects/showcase/chilli-bomba.jpg" },
+        { name: "MoxieSozo", url: "https://moxiesozo.com/", image: "/projects/showcase/moxiesozo.jpg" },
         { name: "Locomotive", url: "https://locomotive.ca/" },
       ],
     },
@@ -381,13 +381,13 @@ export const PORTFOLIO_PAGES: PortfolioPage[] = [
       heading: "Shopify, done right.",
       sub: "Storefronts that set the bar for the stores we build — tap any to open it live in a new tab.",
       sites: [
-        { name: "Popov Leather", url: "https://www.popovleather.com/" },
-        { name: "Suta", url: "https://suta.in/" },
-        { name: "Ridge", url: "https://ridge.com/" },
-        { name: "Beechtree", url: "https://beechtree.pk/" },
-        { name: "Sapphire", url: "https://pk.sapphireonline.pk/" },
-        { name: "Zeen Woman", url: "https://zeenwoman.com/" },
-        { name: "Bica Coffee", url: "https://www.bicacoffee.com/" },
+        { name: "Popov Leather", url: "https://www.popovleather.com/", image: "/projects/showcase/popov-leather.jpg" },
+        { name: "Suta", url: "https://suta.in/", image: "/projects/showcase/suta.jpg" },
+        { name: "Ridge", url: "https://ridge.com/", image: "/projects/showcase/ridge.jpg" },
+        { name: "Beechtree", url: "https://beechtree.pk/", image: "/projects/showcase/beechtree.jpg" },
+        { name: "Sapphire", url: "https://pk.sapphireonline.pk/", image: "/projects/showcase/sapphire.jpg" },
+        { name: "Zeen Woman", url: "https://zeenwoman.com/", image: "/projects/showcase/zeen-woman.jpg" },
+        { name: "Bica Coffee", url: "https://www.bicacoffee.com/", image: "/projects/showcase/bica-coffee.jpg" },
       ],
     },
   },

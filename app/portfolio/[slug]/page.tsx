@@ -136,11 +136,13 @@ function ShowcaseCard({
   url,
   swatch,
   hue,
+  image,
 }: {
   name: string;
   url: string;
   swatch: string;
   hue: string;
+  image?: string;
 }) {
   let domain = url;
   try {
@@ -173,23 +175,35 @@ function ShowcaseCard({
           background: `radial-gradient(circle at 30% 20%, ${hue}, transparent 65%), linear-gradient(135deg, #0a0a0b 0%, #111114 100%)`,
         }}
       >
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-40 transition-opacity duration-700 group-hover:opacity-60"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
-        />
-        <div className="absolute inset-0 grid place-items-center">
-          <span
-            className="grid h-14 w-14 place-items-center rounded-2xl text-xl font-bold text-black transition-transform duration-300 group-hover:scale-110"
-            style={{ backgroundColor: swatch }}
-          >
-            {name.charAt(0)}
-          </span>
-        </div>
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt={`${name} website`}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+          />
+        ) : (
+          <>
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-40 transition-opacity duration-700 group-hover:opacity-60"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+                backgroundSize: "32px 32px",
+              }}
+            />
+            <div className="absolute inset-0 grid place-items-center">
+              <span
+                className="grid h-14 w-14 place-items-center rounded-2xl text-xl font-bold text-black transition-transform duration-300 group-hover:scale-110"
+                style={{ backgroundColor: swatch }}
+              >
+                {name.charAt(0)}
+              </span>
+            </div>
+          </>
+        )}
         <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/90 backdrop-blur-md transition-all duration-300 group-hover:border-white/35 group-hover:bg-black/90">
           <span
             className="h-1.5 w-1.5 rounded-full"
@@ -434,6 +448,7 @@ export default async function PortfolioServicePage({
                     url={site.url}
                     swatch={swatch}
                     hue={page.hue}
+                    image={site.image}
                   />
                 </Reveal>
               ))}

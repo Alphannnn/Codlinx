@@ -38,14 +38,24 @@ const NAV_ITEMS: NavItem[] = [
         description: "Native iOS, Android & cross-platform builds.",
       },
       {
-        label: "Social Media Management",
-        href: "/services/social-media",
-        description: "Channels run end to end, on brand.",
+        label: "Cloud & DevOps",
+        href: "/services/cloud",
+        description: "AWS, GCP, CI/CD pipelines, and SRE.",
       },
       {
-        label: "Social Media Marketing",
-        href: "/services/social-media-marketing",
-        description: "Paid social that turns reach into revenue.",
+        label: "AI & Machine Learning",
+        href: "/services/ai",
+        description: "LLM integrations, RAG, and ML pipelines.",
+      },
+      {
+        label: "UI / UX Design",
+        href: "/services/design",
+        description: "Brand systems and conversion-led interfaces.",
+      },
+      {
+        label: "Product Strategy",
+        href: "/services/strategy",
+        description: "Discovery, roadmaps, and go-to-market.",
       },
       {
         label: "Graphic Design",
@@ -56,6 +66,16 @@ const NAV_ITEMS: NavItem[] = [
         label: "SEO",
         href: "/services/seo",
         description: "Rank for the searches that actually convert.",
+      },
+      {
+        label: "Social Media Management",
+        href: "/services/social-media",
+        description: "Channels run end to end, on brand.",
+      },
+      {
+        label: "Social Media Marketing",
+        href: "/services/social-media-marketing",
+        description: "Paid social that turns reach into revenue.",
       },
     ],
   },

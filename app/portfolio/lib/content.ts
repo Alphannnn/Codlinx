@@ -12,6 +12,7 @@ export type PortfolioGroup =
   | "Social"
   | "AI & Search Visibility"
   | "Web Development"
+  | "Creative"
   | "Paid Media"
   | "Tools";
 
@@ -585,6 +586,136 @@ export const PORTFOLIO_PAGES: PortfolioPage[] = [
     ],
   },
 
+  // ─────────────────────────────────────────── Web Development · Mobile
+  {
+    slug: "mobile-apps",
+    navLabel: "Mobile Apps",
+    navDescription: "Native iOS, Android & cross-platform apps that feel native.",
+    group: "Web Development",
+    sourceUrl: "https://www.digitalotters.com/mobile-app-development/",
+    swatch: "#6C8CFF",
+    hue: "rgba(108,140,255,0.22)",
+    eyebrow: "Mobile App Development",
+    title: "Mobile apps that",
+    highlight: "feel native.",
+    description:
+      "iOS, Android, and cross-platform apps engineered to pass store review on day one — with the polish, offline behavior, and animation users expect from a category-leading product.",
+    heroBadge: "iOS · Android · React Native · Flutter",
+    heroStats: [
+      { value: "2", label: "Stores, one codebase option" },
+      { value: "60fps", label: "Animation target" },
+      { value: "Offline", label: "First-class by default" },
+      { value: "4.8★", label: "Store-quality polish" },
+    ],
+    overview: {
+      kicker: "What is mobile app development",
+      heading: "Mobile is unforgiving. We sweat the details users feel.",
+      body: "A janky scroll, a missed offline state, a confused permissions prompt — and you lose the user. We build apps the right way: native where it counts, cross-platform where it pays, and tested on real devices before a single store submission.",
+    },
+    offerings: [
+      { title: "iOS App Development", body: "Native Swift builds tuned for the App Store, from iPhone to iPad." },
+      { title: "Android App Development", body: "Native Kotlin apps built to thrive across the Android device landscape." },
+      { title: "Cross-Platform Apps", body: "One React Native or Flutter codebase shipping to both stores at once." },
+      { title: "App UI/UX Design", body: "Flows, motion, and micro-interactions designed for thumbs, not cursors." },
+      { title: "Offline, Sync & Push", body: "Offline-first data, conflict resolution, deep linking, and push from day one." },
+      { title: "Store Launch & ASO", body: "Submission, review responses, screenshots, and app-store optimization handled end to end." },
+    ],
+    process: {
+      kicker: "How we ship apps",
+      heading: "From idea to the store, demoed every Friday.",
+      steps: [
+        { title: "Platform call", body: "Native vs cross-platform — we make the right call for your team, in writing, in week one." },
+        { title: "Foundation sprint", body: "Auth, navigation, design system, and the first end-to-end happy path." },
+        { title: "Feature sprints", body: "TestFlight and Play Internal builds every week, with demos you can actually tap." },
+        { title: "Store submission", body: "We file the review, handle rejections, and ship the v1.0 launch build." },
+      ],
+    },
+    metricBand: [
+      { value: "Native", label: "Where performance matters" },
+      { value: "OTA", label: "Updates without a resubmit" },
+      { value: "Crash-free", label: "Monitoring from launch" },
+      { value: "Weekly", label: "Builds in your hands" },
+    ],
+    packages: [
+      { name: "App MVP", blurb: "For founders validating a mobile product fast.", features: ["Single platform or cross-platform", "Core happy-path features", "Store submission included", "30-day launch support"] },
+      { name: "App Pro", featured: true, blurb: "For teams shipping a polished v1.", features: ["iOS + Android", "Offline sync & push", "Analytics & crash reporting", "ASO and launch assets"] },
+      { name: "App Scale", blurb: "For products growing past the first release.", features: ["Native modules where needed", "OTA update pipeline", "A/B and feature flags", "Ongoing retainer support"] },
+    ],
+    marqueeTitle: "Stacks we build on",
+    marquee: ["Swift", "Kotlin", "React Native", "Flutter", "Expo", "Firebase", "Sentry", "Amplitude", "App Store", "Google Play"],
+    industries: ["E-commerce", "Healthcare", "Fintech", "Logistics", "Education", "Social"],
+    faqs: [
+      { q: "React Native or native?", a: "It depends on team size, performance ceiling, and native-API needs. We make a recommendation in week one, in writing — and we're fluent in both." },
+      { q: "Do you handle the App Store submission?", a: "Yes. Provisioning, screenshots, review responses, and ASO — the whole pipeline, including resubmits if Apple or Google push back." },
+      { q: "Does the app work offline?", a: "By default. We design data models with conflict resolution from day one, not as an afterthought bolted on later." },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────── Creative
+  {
+    slug: "graphic-design",
+    navLabel: "Graphic Design",
+    navDescription: "Brand identity, creative, and assets that stop the scroll.",
+    group: "Creative",
+    sourceUrl: "https://www.digitalotters.com/graphic-design/",
+    swatch: "#F472B6",
+    hue: "rgba(244,114,182,0.22)",
+    eyebrow: "Graphic Design",
+    title: "Design that",
+    highlight: "stops the scroll.",
+    description:
+      "Logos, brand systems, ad creative, and social assets designed with intent — built to look sharp everywhere from a billboard to a feed thumbnail, and to convert attention into action.",
+    heroBadge: "Brand · Social · Ads · Print",
+    heroStats: [
+      { value: "0.05s", label: "To make a first impression" },
+      { value: "All-format", label: "Designed once, fits everywhere" },
+      { value: "Source", label: "Editable files, always yours" },
+      { value: "2", label: "Concept directions per brief" },
+    ],
+    overview: {
+      kicker: "What is graphic design",
+      heading: "Design isn't decoration — it's the first thing you're judged on.",
+      body: "Before a word is read, a brand is judged on how it looks. We build identity systems and creative that stay consistent across every surface — so the brand shows up sharp whether it's a billboard, a pitch deck, or a feed thumbnail.",
+    },
+    offerings: [
+      { title: "Logo & Brand Identity", body: "Marks, color, type, and full brand guidelines that scale across every touchpoint." },
+      { title: "Social Media Creative", body: "Post, story, and reel templates that keep the feed on-brand and on-message." },
+      { title: "Ad & Display Creative", body: "Banners, display sets, and ad creative built and tested to convert." },
+      { title: "Pitch Decks & Collateral", body: "Decks, one-pagers, and print collateral that make the brand look serious." },
+      { title: "Packaging & Print", body: "Print-ready packaging, signage, and merch designed to spec." },
+      { title: "Motion & Animated Assets", body: "Animated logos, motion graphics, and short-form video for feeds and ads." },
+    ],
+    process: {
+      kicker: "How we design",
+      heading: "Direction agreed before a single pixel moves.",
+      steps: [
+        { title: "Brief & moodboard", body: "We learn the brand, audience, and goal — then align on direction up front." },
+        { title: "Concepts", body: "Two to three distinct directions, not twenty safe variations of one idea." },
+        { title: "Refine", body: "We tighten the chosen route across every format it needs to live in." },
+        { title: "Handover", body: "Editable source files, exports, and a guideline doc your team can run with." },
+      ],
+    },
+    metricBand: [
+      { value: "On-brand", label: "Every asset, every surface" },
+      { value: "Source", label: "Editable files handed over" },
+      { value: "All-format", label: "Print to feed thumbnail" },
+      { value: "Fast", label: "Turnarounds in days" },
+    ],
+    packages: [
+      { name: "Brand Starter", blurb: "For new brands that need a sharp identity.", features: ["Logo + core identity", "Color & type system", "Basic brand guidelines", "Editable source files"] },
+      { name: "Creative Pro", featured: true, blurb: "For brands shipping creative every week.", features: ["Full brand guidelines", "Social + ad templates", "Two revision rounds per asset", "Source files & usage kit"] },
+      { name: "Creative Retainer", blurb: "For teams with an always-on creative pipeline.", features: ["Monthly creative scope", "Effectively unlimited revisions", "Motion & animated assets", "Priority turnaround"] },
+    ],
+    marqueeTitle: "Tools we design in",
+    marquee: ["Figma", "Photoshop", "Illustrator", "After Effects", "InDesign", "Canva", "Lottie", "Procreate"],
+    industries: ["E-commerce", "Real Estate", "Healthcare", "Hospitality", "Tech", "Corporate"],
+    faqs: [
+      { q: "Do we get the source files?", a: "Always. You own the editable Figma / Adobe files and the full export set — no lock-in, ever." },
+      { q: "Can you match our existing brand?", a: "Yes. Send your guidelines and we'll work inside them, or help evolve them if they're feeling dated." },
+      { q: "How many revisions are included?", a: "Project work includes two rounds per asset; retainers are effectively unlimited within the monthly scope." },
+    ],
+  },
+
   // ───────────────────────────────────────────────────────────── Tools
   {
     slug: "tools",
@@ -714,16 +845,32 @@ export function getFeatureRows(slug: string): FeatureRow[] {
   return FEATURE_ROWS[slug] ?? [];
 }
 
-/** Nav-link list for the Codlinx navbar dropdown + landing index. */
-export const PORTFOLIO_NAV = PORTFOLIO_PAGES.map((p) => ({
-  label: p.navLabel,
-  href: `/portfolio/${p.slug}`,
-  description: p.navDescription,
-}));
+/**
+ * Nav-link list for the Codlinx navbar Portfolio dropdown.
+ * Curated to the six core categories, in this exact order. Other portfolio
+ * pages still exist and render — they're just not surfaced in the dropdown.
+ */
+const PORTFOLIO_NAV_SLUGS = [
+  "web-development", // "Websites"
+  "mobile-apps",
+  "social-media-management", // "Social Media"
+  "paid-ads", // "Paid Ads"
+  "graphic-design",
+  "seo-services", // "SEO"
+] as const;
+
+export const PORTFOLIO_NAV = PORTFOLIO_NAV_SLUGS.map((slug) => {
+  const p = PORTFOLIO_PAGES.find((page) => page.slug === slug)!;
+  return {
+    label: p.navLabel,
+    href: `/portfolio/${p.slug}`,
+    description: p.navDescription,
+  };
+});
 
 /** Grouped for the landing page, mirroring the Digital Otters menu structure. */
 export const PORTFOLIO_GROUPS: { group: PortfolioGroup; pages: PortfolioPage[] }[] = (
-  ["Social", "AI & Search Visibility", "Web Development", "Paid Media", "Tools"] as PortfolioGroup[]
+  ["Social", "AI & Search Visibility", "Web Development", "Creative", "Paid Media", "Tools"] as PortfolioGroup[]
 ).map((group) => ({
   group,
   pages: PORTFOLIO_PAGES.filter((p) => p.group === group),

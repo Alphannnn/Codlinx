@@ -15,6 +15,7 @@ export default function PageHero({
   backLabel = "Back to home",
   children,
   media,
+  background,
 }: {
   eyebrow: string;
   title: string;
@@ -26,9 +27,12 @@ export default function PageHero({
   children?: ReactNode;
   /** Full-width visual rendered beneath the hero copy (e.g. a project reel). */
   media?: ReactNode;
+  /** Full-bleed layer behind the hero copy (e.g. a background slideshow). */
+  background?: ReactNode;
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-black text-white">
+      {background}
       <div
         aria-hidden
         className="absolute inset-0 -z-10 opacity-[0.10]"

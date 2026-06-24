@@ -4,6 +4,7 @@ import CursorGlow from "../components/CursorGlow";
 import Reveal from "../components/Reveal";
 import Marquee from "../components/Marquee";
 import ClosingCTA from "../components/ClosingCTA";
+import WhyChooseIcon from "../components/WhyChooseIcon";
 import {
   ACCENT,
   PORTFOLIO_GROUPS,
@@ -320,30 +321,42 @@ export default function PortfolioLanding() {
           <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {WHY_CHOOSE.map((w, idx) => (
               <Reveal key={w.title} delay={(idx % 3) * 80}>
-                <div className="h-full rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6">
-                  <span
-                    className="grid h-9 w-9 place-items-center rounded-full text-black"
-                    style={{ backgroundColor: ACCENT }}
-                  >
-                    <svg
-                      viewBox="0 0 16 16"
-                      className="h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden
-                    >
-                      <path d="M3 8.5l3 3 7-7" />
-                    </svg>
-                  </span>
-                  <h3 className="mt-4 text-base font-semibold text-white">
-                    {w.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/55">
-                    {w.body}
-                  </p>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.04]">
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -inset-x-12 -top-12 h-32 -skew-x-12 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, rgba(63,201,180,0.18), transparent)`,
+                    }}
+                  />
+                  <div className="relative">
+                    <span className="relative grid h-12 w-12 place-items-center">
+                      <span
+                        aria-hidden
+                        className="absolute inset-0 rounded-2xl opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-60"
+                        style={{ backgroundColor: ACCENT }}
+                      />
+                      <span
+                        className="relative grid h-12 w-12 place-items-center rounded-2xl transition-transform duration-300 group-hover:-translate-y-0.5"
+                        style={{
+                          backgroundColor: `${ACCENT}1f`,
+                          color: ACCENT,
+                          boxShadow: `inset 0 0 0 1px ${ACCENT}59`,
+                        }}
+                      >
+                        <WhyChooseIcon
+                          name={w.icon}
+                          className="h-6 w-6 transition-transform duration-300 group-hover:scale-110"
+                        />
+                      </span>
+                    </span>
+                    <h3 className="mt-4 text-base font-semibold text-white">
+                      {w.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-white/55">
+                      {w.body}
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ))}

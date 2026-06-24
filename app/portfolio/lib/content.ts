@@ -819,13 +819,13 @@ export const RECOGNIZED: string[] = [
 ];
 
 /** Shared "Why Choose Digital Otters" reasons — DO reuses these across pages. */
-export const WHY_CHOOSE: { title: string; body: string }[] = [
-  { title: "A senior, expert team", body: "Specialists who've shipped this work before — not juniors learning on your budget." },
-  { title: "Data-driven approach", body: "Every decision is tied to a number. We measure, learn, and double down on what works." },
-  { title: "Transparent reporting", body: "Clear monthly reporting on the metrics that matter — no vanity dashboards." },
-  { title: "Strategies built for you", body: "Fully customized to your brand, market, and goals — never a recycled template." },
-  { title: "Result-oriented", body: "We optimize for outcomes — rankings, leads, revenue — not activity for its own sake." },
-  { title: "Dedicated support", body: "A responsive team that picks up when you need them, on the channels you use." },
+export const WHY_CHOOSE: { title: string; body: string; icon: string }[] = [
+  { icon: "team", title: "A senior, expert team", body: "Specialists who've shipped this work before — not juniors learning on your budget." },
+  { icon: "data", title: "Data-driven approach", body: "Every decision is tied to a number. We measure, learn, and double down on what works." },
+  { icon: "report", title: "Transparent reporting", body: "Clear monthly reporting on the metrics that matter — no vanity dashboards." },
+  { icon: "strategy", title: "Strategies built for you", body: "Fully customized to your brand, market, and goals — never a recycled template." },
+  { icon: "results", title: "Result-oriented", body: "We optimize for outcomes — rankings, leads, revenue — not activity for its own sake." },
+  { icon: "support", title: "Dedicated support", body: "A responsive team that picks up when you need them, on the channels you use." },
 ];
 
 export type FeatureRow = { title: string; body: string; bullets: string[] };

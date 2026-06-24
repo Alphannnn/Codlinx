@@ -820,6 +820,11 @@ export function getPortfolioThumb(slug: string): string | undefined {
   return PORTFOLIO_THUMBS[slug];
 }
 
+/** Every real project screenshot across the portfolio — for the hero reel. */
+export const PROJECT_GALLERY: ShowcaseSite[] = PORTFOLIO_PAGES.flatMap(
+  (p) => p.showcase?.sites ?? []
+).filter((s): s is ShowcaseSite & { image: string } => Boolean(s.image));
+
 // ───────────────────────────────────────────────────────────────────────────
 // Faithful Digital Otters section data.
 //

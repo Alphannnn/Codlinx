@@ -9,6 +9,7 @@ import WhyChooseIcon from "../../components/WhyChooseIcon";
 import SocialMediaPage from "../_components/SocialMediaPage";
 import {
   PORTFOLIO_PAGES,
+  PROJECT_GALLERY,
   getPortfolioPage,
   getPortfolioThumb,
   getFeatureRows,
@@ -462,6 +463,72 @@ function IndustryGlyph({ name }: { name: string }) {
   );
 }
 
+/** Slow, elegant horizontal reel of real project screenshots for the hero. */
+function HeroProjectReel({
+  projects,
+}: {
+  projects: { name: string; url: string; image?: string }[];
+}) {
+  if (!projects.length) return null;
+  return (
+    <div className="relative">
+      <div className="mx-auto mb-6 flex max-w-6xl items-center gap-3 px-5 sm:px-8">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">
+          Selected live projects
+        </span>
+        <span className="h-px flex-1 bg-white/[0.08]" />
+      </div>
+      <Marquee gapClass="gap-4 sm:gap-5" className="codlinx-marquee-slow py-1">
+        {projects.map((proj) => {
+          let domain = proj.url;
+          try {
+            domain = new URL(proj.url).host.replace(/^www\./, "");
+          } catch {
+            /* keep raw */
+          }
+          return (
+            <a
+              key={proj.url}
+              href={proj.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${proj.name} live in a new tab`}
+              className="group/card relative block w-[280px] shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] transition-all duration-500 hover:-translate-y-1.5 hover:border-white/25 sm:w-[330px]"
+            >
+              <div className="flex items-center gap-1.5 border-b border-white/[0.06] bg-black/60 px-3 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-red-400/70" />
+                <span className="h-1.5 w-1.5 rounded-full bg-yellow-400/70" />
+                <span className="h-1.5 w-1.5 rounded-full bg-green-400/70" />
+                <span className="ml-2 truncate text-[10px] font-medium text-white/55">
+                  {domain}
+                </span>
+              </div>
+              <div className="relative aspect-[16/10] overflow-hidden">
+                {proj.image && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={proj.image}
+                    alt={`${proj.name} website`}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[1.4s] ease-out group-hover/card:scale-[1.06]"
+                  />
+                )}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
+                />
+                <span className="absolute bottom-2.5 left-3 translate-y-1 text-sm font-semibold text-white opacity-0 transition-all duration-300 group-hover/card:translate-y-0 group-hover/card:opacity-100">
+                  {proj.name}
+                </span>
+              </div>
+            </a>
+          );
+        })}
+      </Marquee>
+    </div>
+  );
+}
+
 export default async function PortfolioServicePage({
   params,
 }: {
@@ -494,6 +561,7 @@ export default async function PortfolioServicePage({
         backHref="/portfolio"
         backLabel="All portfolio pages"
         stats={page.heroStats}
+        media={<HeroProjectReel projects={PROJECT_GALLERY} />}
       >
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <QuoteButton swatch={swatch} />

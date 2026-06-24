@@ -183,6 +183,10 @@ select:focus-visible,
   animation: codlinx-marquee 38s linear infinite;
   will-change: transform;
 }
+/* Slow, elegant variant for the hero project reel. */
+.codlinx-marquee-slow .codlinx-marquee-track {
+  animation-duration: 68s;
+}
 .codlinx-marquee:hover .codlinx-marquee-track {
   animation-play-state: paused;
 }

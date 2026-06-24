@@ -14,6 +14,7 @@ export default function PageHero({
   backHref = "/",
   backLabel = "Back to home",
   children,
+  media,
 }: {
   eyebrow: string;
   title: string;
@@ -23,6 +24,8 @@ export default function PageHero({
   backHref?: string;
   backLabel?: string;
   children?: ReactNode;
+  /** Full-width visual rendered beneath the hero copy (e.g. a project reel). */
+  media?: ReactNode;
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-black text-white">
@@ -123,6 +126,8 @@ export default function PageHero({
 
         {children}
       </div>
+
+      {media && <div className="pb-16 sm:pb-20">{media}</div>}
     </section>
   );
 }

@@ -90,7 +90,7 @@ function VisualPanel({
     >
       <div
         aria-hidden
-        className="absolute inset-0 opacity-40"
+        className="codlinx-grid-pan absolute inset-0 opacity-40"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
@@ -106,13 +106,47 @@ function VisualPanel({
         className="codlinx-float-orb absolute -right-10 -top-10 h-48 w-48 rounded-full opacity-30 blur-3xl"
         style={{ backgroundColor: swatch }}
       />
-      <div className="absolute inset-0 grid place-items-center">
+
+      {/* Sweeping scanline */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"
+      >
         <span
-          className="grid h-24 w-24 place-items-center rounded-3xl text-4xl font-bold text-black shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)]"
-          style={{ backgroundColor: swatch }}
-        >
-          {glyph}
-        </span>
+          className="codlinx-scanline absolute inset-x-0 h-[2px]"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${swatch}, transparent)`,
+            boxShadow: `0 0 18px 1px ${swatch}`,
+          }}
+        />
+      </div>
+
+      {/* Drifting particles */}
+      <span
+        aria-hidden
+        className="codlinx-drift-1 absolute left-[18%] top-[24%] h-2 w-2 rounded-full"
+        style={{ backgroundColor: swatch, boxShadow: `0 0 12px 2px ${swatch}` }}
+      />
+      <span
+        aria-hidden
+        className="codlinx-drift-2 absolute bottom-[26%] right-[20%] h-1.5 w-1.5 rounded-full opacity-70"
+        style={{ backgroundColor: swatch, boxShadow: `0 0 10px 1px ${swatch}` }}
+      />
+
+      <div className="absolute inset-0 grid place-items-center">
+        <div className="relative grid place-items-center">
+          <span
+            aria-hidden
+            className="codlinx-pulse-ring absolute h-24 w-24 rounded-3xl border-2"
+            style={{ borderColor: swatch }}
+          />
+          <span
+            className="codlinx-bob relative z-10 grid h-24 w-24 place-items-center rounded-3xl text-4xl font-bold text-black shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)]"
+            style={{ backgroundColor: swatch }}
+          >
+            {glyph}
+          </span>
+        </div>
       </div>
       <div className="absolute inset-x-5 bottom-5 flex items-center justify-between">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">

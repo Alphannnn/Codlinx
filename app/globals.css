@@ -209,6 +209,50 @@ select:focus-visible,
   will-change: border-radius;
 }
 
+/* ── Feature-panel ambient motion ───────────────────────────────── */
+@keyframes codlinx-scan-y {
+  0%   { top: -8%; opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { top: 108%; opacity: 0; }
+}
+@keyframes codlinx-grid-pan {
+  from { background-position: 0 0; }
+  to   { background-position: 0 -32px; }
+}
+@keyframes codlinx-drift-1 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(20px, -26px, 0); }
+}
+@keyframes codlinx-drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(-18px, 22px, 0); }
+}
+@keyframes codlinx-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+.codlinx-scanline {
+  animation: codlinx-scan-y 4.6s ease-in-out infinite;
+  will-change: top, opacity;
+}
+.codlinx-grid-pan {
+  animation: codlinx-grid-pan 3.5s linear infinite;
+  will-change: background-position;
+}
+.codlinx-drift-1 {
+  animation: codlinx-drift-1 7s ease-in-out infinite;
+  will-change: transform;
+}
+.codlinx-drift-2 {
+  animation: codlinx-drift-2 9s ease-in-out infinite;
+  will-change: transform;
+}
+.codlinx-bob {
+  animation: codlinx-bob 4s ease-in-out infinite;
+  will-change: transform;
+}
+
 .codlinx-grain::after {
   content: "";
   position: absolute;
@@ -259,7 +303,12 @@ select:focus-visible,
   .codlinx-spin-slow,
   .codlinx-blob,
   .codlinx-grain::after,
-  .codlinx-conic-border::before {
+  .codlinx-conic-border::before,
+  .codlinx-scanline,
+  .codlinx-grid-pan,
+  .codlinx-drift-1,
+  .codlinx-drift-2,
+  .codlinx-bob {
     animation: none !important;
   }
 }
